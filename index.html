@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Njalos July | The Horse Is Back — Country Style</title>
+  <!-- Google Fonts + Tailwind + Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ----- LUXURY DESIGN SYSTEM (inspired by The Horse Is Back) ----- */
+    :root {
+      --navy: #050d1a;
+      --deep: #071428;
+      --blue: #0a2463;
+      --violet: #1e1040;
+      --purple: #2d1b69;
+      --gold: #c9a84c;
+      --gold-light: #e8cb7a;
+      --champagne: #f7e7a3;
+      --white: #f8f4ee;
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow: hidden;
+    }
+    h1, h2, h3, h4, .luxury-font { font-family: 'Cinzel', serif; }
+    .serif-text { font-family: 'Cormorant Garamond', serif; }
+
+    /* --- SLIDES CONTAINER --- */
+    .presentation {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1), visibility 0.9s;
+      overflow-y: auto;
+      padding: 2rem 2.5rem;
+      background: linear-gradient(135deg, rgba(5,13,26,0.92) 0%, rgba(30,16,64,0.88) 100%);
+      backdrop-filter: blur(2px);
+      scrollbar-width: thin;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 10;
+    }
+    .slide::-webkit-scrollbar { width: 4px; }
+    .slide::-webkit-scrollbar-track { background: transparent; }
+    .slide::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* --- VIDEO BACKGROUND (first slide only) --- */
+    .hero-video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.45) saturate(1.1);
+      transition: filter 0.5s ease;
+    }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(5,13,26,0.65) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .gold-sheen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, rgba(201,168,76,0.08) 0%, transparent 60%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* --- LUXURY TITLE ANIMATION (first slide) --- */
+    .luxury-title-container {
+      position: relative;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      text-align: center;
+    }
+    .horse-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.8rem, 9vw, 6rem);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, #f3e5ab 70%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 25px rgba(201,168,76,0.3);
+      animation: titleGlide 1.6s cubic-bezier(0.2, 0.9, 0.3, 1.1) forwards;
+      transform: translateY(60px) scale(0.96);
+      opacity: 0;
+    }
+    @keyframes titleGlide {
+      0% { opacity: 0; transform: translateY(80px) scale(0.92); filter: blur(8px); }
+      40% { opacity: 0.8; transform: translateY(-8px) scale(1.02); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+    .subtag-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-top: 1.5rem;
+      animation: fadeInUp 1s ease 1s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* --- CORNER BRACKETS (luxury detail) --- */
+    .corner-brackets {
+      position: absolute;
+      inset: 20px;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .bracket {
+      position: absolute;
+      width: 45px;
+      height: 45px;
+      border-color: rgba(201,168,76,0.55);
+      border-style: solid;
+    }
+    .bracket-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+    .bracket-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+    .bracket-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+    .bracket-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+    /* --- SHARED SECTION STYLES (luxury glassmorphism) --- */
+    .section-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--champagne), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1.2rem;
+    }
+    .gold-divider {
+      width: 70px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.2rem 0;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 1.2rem;
+      transition: all 0.4s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(201,168,76,0.5);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    /* artist card specific */
+    .artist-card {
+      background: linear-gradient(145deg, rgba(10,36,99,0.3), rgba(45,27,105,0.25));
+      border-left: 3px solid var(--gold);
+    }
+    .stat-number {
+      font-family: 'Cinzel', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    /* navigation */
+    .nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    .nav-btn:hover {
+      background: rgba(201,168,76,0.2);
+      transform: scale(1.08);
+      border-color: var(--gold);
+    }
+    .slide-indicator {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(16px);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      display: flex;
+      gap: 0.6rem;
+      z-index: 100;
+      border: 1px solid rgba(201,168,76,0.3);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .dot.active {
+      width: 26px;
+      background: var(--gold);
+      border-radius: 12px;
+    }
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      width: 0%;
+      z-index: 200;
+      transition: width 0.3s ease;
+    }
+    /* responsive */
+    @media (max-width: 768px) {
+      .slide { padding: 1.5rem; }
+      .section-title { font-size: 1.8rem; }
+      .artist-card { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="presentation">
+  <!-- SLIDE 1: THE HORSE IS BACK (full video, champagne atmosphere) -->
+  <div class="slide active" id="slide1">
+    <video class="hero-video-bg" autoplay muted loop playsinline id="heroVideo">
+      <source src="https://videos.pexels.com/video-files/3197673/3197673-uhd_2560_1440_25fps.mp4" type="video/mp4">
+      <!-- fallback: luxury ambiance video -->
+    </video>
+    <div class="video-overlay"></div>
+    <div class="gold-sheen"></div>
+    <div class="corner-brackets">
+      <div class="bracket bracket-tl"></div>
+      <div class="bracket bracket-tr"></div>
+      <div class="bracket bracket-bl"></div>
+      <div class="bracket bracket-br"></div>
+    </div>
+    <div class="luxury-title-container">
+      <h1 class="horse-title">THE HORSE<br>IS BACK</h1>
+      <div class="subtag-line">Country Style · Njalos July</div>
+      <div style="margin-top: 2rem; display: flex; gap: 0.8rem; justify-content: center; animation: fadeInUp 1.4s ease 1.3s forwards; opacity:0;">
+        <i class="fas fa-champagne-glasses" style="color: var(--gold-light); font-size: 1.4rem;"></i>
+        <i class="fas fa-music" style="color: var(--gold-light); font-size: 1.4rem;"></i>
+        <i class="fas fa-crown" style="color: var(--gold-light); font-size: 1.4rem;"></i>
+      </div>
+      <p style="margin-top: 2rem; font-size: 0.75rem; letter-spacing: 0.2em; color: rgba(248,244,238,0.5);">Hollywood Bets Durban July · Prestige Edition</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: The story of Njalos July -->
+  <div class="slide" id="slide2">
+    <div class="max-w-4xl mx-auto flex flex-col justify-center min-h-[80vh]">
+      <div class="inline-block mb-3"><span class="section-eyebrow"><i class="fas fa-crown mr-2"></i> THE LEGACY</span></div>
+      <h2 class="section-title">The Horse Is Back <br>Country Style!</h2>
+      <div class="gold-divider"></div>
+      <div class="glass-card p-6 md:p-8">
+        <p class="serif-text text-lg md:text-xl leading-relaxed text-white/85 italic">
+          Njalos July — a high fashion event, live music experience designed to bring artists and the classic audiences together. 
+          Featuring local and national performers, celebrities, and opulent taste in lifestyle. Njalos July aims to create an 
+          energetic, memorable, and well-produced horseracing experience at the prestigious KwaZulu Natal's Hollywood Bets Durban July event.
+        </p>
+        <div class="mt-6 flex gap-3 text-gold-300"><i class="fas fa-champagne-glasses text-gold-400"></i><i class="fas fa-horse-head text-gold-400"></i><i class="fas fa-record-vinyl text-gold-400"></i></div>
+      </div>
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
+        <div class="bg-white/5 p-3 rounded-xl border border-gold/20"><i class="fas fa-calendar-alt text-gold"></i><p class="text-sm mt-1">July 2026 · Durban</p></div>
+        <div class="bg-white/5 p-3 rounded-xl border border-gold/20"><i class="fas fa-ticket-alt text-gold"></i><p class="text-sm mt-1">VIP & Premium Access</p></div>
+        <div class="bg-white/5 p-3 rounded-xl border border-gold/20"><i class="fas fa-music text-gold"></i><p class="text-sm mt-1">Live Performances</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Event Concept -->
+  <div class="slide" id="slide3">
+    <div class="max-w-5xl mx-auto">
+      <span class="section-eyebrow">✦ THE VISION ✦</span>
+      <h2 class="section-title">Event Concept</h2>
+      <div class="gold-divider"></div>
+      <div class="grid md:grid-cols-2 gap-6 mt-4">
+        <div class="glass-card p-6">
+          <i class="fas fa-head-side-headphones text-3xl text-gold mb-3"></i>
+          <h3 class="text-xl font-bold">Curated Music Theme</h3>
+          <p class="text-white/70 mt-2">Carefully curated lineup supported by high quality sound, lighting, and stage design.</p>
+        </div>
+        <div class="glass-card p-6">
+          <i class="fas fa-chalkboard-user text-3xl text-gold mb-3"></i>
+          <h3 class="text-xl font-bold">Interactive Experiences</h3>
+          <p class="text-white/70 mt-2">Combines live performances with interactive audience experiences, strengthened by a strong visual identity and consistent branding.</p>
+        </div>
+        <div class="md:col-span-2 glass-card p-6 flex flex-wrap gap-4 items-center justify-between">
+          <div><i class="fas fa-palette text-gold text-2xl mr-2"></i><span class="font-semibold">Visual Identity</span></div>
+          <div><i class="fas fa-lightbulb text-gold text-2xl mr-2"></i><span class="font-semibold">Immersive Lighting</span></div>
+          <div><i class="fas fa-waveform text-gold text-2xl mr-2"></i><span class="font-semibold">Premium Acoustics</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Target Audience -->
+  <div class="slide" id="slide4">
+    <div class="max-w-4xl mx-auto">
+      <span class="section-eyebrow">🎯 AUDIENCE INSIGHTS</span>
+      <h2 class="section-title">Target Audience</h2>
+      <div class="gold-divider"></div>
+      <div class="grid md:grid-cols-2 gap-5 mt-5">
+        <div class="glass-card p-5 flex items-start gap-3"><i class="fas fa-music fa-2x text-gold"></i><div><p class="font-bold">Music enthusiasts</p><p class="text-white/70">Aged 18–35, passionate about live performances and music culture</p></div></div>
+        <div class="glass-card p-5 flex items-start gap-3"><i class="fas fa-briefcase fa-2x text-gold"></i><div><p class="font-bold">Young professionals</p><p class="text-white/70">Students, creatives, and trendsetters seeking premium experiences</p></div></div>
+        <div class="glass-card p-5 flex items-start gap-3"><i class="fas fa-hashtag fa-2x text-gold"></i><div><p class="font-bold">Active social media users</p><p class="text-white/70">Concert goers, digital natives, and brand advocates</p></div></div>
+        <div class="glass-card p-5 flex items-start gap-3"><i class="fas fa-champagne-glasses fa-2x text-gold"></i><div><p class="font-bold">Luxury lifestyle seekers</p><p class="text-white/70">Fans of high fashion, racing culture, and exclusive events</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Artist Lineup -->
+  <div class="slide" id="slide5">
+    <div class="max-w-6xl mx-auto">
+      <span class="section-eyebrow">🌟 STAR POWER</span>
+      <h2 class="section-title">Artist Lineup</h2>
+      <div class="gold-divider"></div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="artist-card glass-card p-5"><i class="fas fa-microphone-alt text-gold text-2xl mb-2"></i><h3 class="text-xl font-bold">Drew Feig</h3><p class="text-white/60 text-sm">A professional singer with extensive experience performing at exclusive events and major stages.</p></div>
+        <div class="artist-card glass-card p-5"><i class="fas fa-guitar text-gold text-2xl mb-2"></i><h3 class="text-xl font-bold">Jamie Chastain</h3><p class="text-white/60 text-sm">Alternative rock band with powerful stage presence, combining modern rock elements with atmospheric soundscapes.</p></div>
+        <div class="artist-card glass-card p-5"><i class="fas fa-headphones text-gold text-2xl mb-2"></i><h3 class="text-xl font-bold">Estelle Darcy</h3><p class="text-white/60 text-sm">Dynamic electronic music DJ specializing in EDM and house music, creating high-energy sets.</p></div>
+        <div class="artist-card glass-card p-5"><i class="fas fa-piano text-gold text-2xl mb-2"></i><h3 class="text-xl font-bold">Olivia Wilson</h3><p class="text-white/60 text-sm">Solo singer-songwriter with soft pop and acoustic style, heartfelt performances and strong vocal delivery.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Marketing & Promotion Strategy -->
+  <div class="slide" id="slide6">
+    <div class="max-w-5xl mx-auto">
+      <span class="section-eyebrow">📢 AMPLIFY THE VOICE</span>
+      <h2 class="section-title">Marketing & Promotion Strategy</h2>
+      <div class="gold-divider"></div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card p-5"><i class="fas fa-chart-line text-gold text-xl mr-2"></i><h3 class="font-bold text-lg">Visual Teasers & Countdowns</h3><p class="text-white/70 text-sm">Build excitement before the event with cinematic visuals.</p></div>
+        <div class="glass-card p-5"><i class="fas fa-hashtag text-gold text-xl mr-2"></i><h3 class="font-bold text-lg">Social Media Campaigns</h3><p class="text-white/70 text-sm">Engaging posts, videos, ads to reach wider audience.</p></div>
+        <div class="glass-card p-5"><i class="fas fa-user-friends text-gold text-xl mr-2"></i><h3 class="font-bold text-lg">Influencer & Media Partnerships</h3><p class="text-white/70 text-sm">Increase awareness and credibility through collaborations.</p></div>
+        <div class="glass-card p-5"><i class="fas fa-ticket-alt text-gold text-xl mr-2"></i><h3 class="font-bold text-lg">Online Ticketing & Early Bird</h3><p class="text-white/70 text-sm">Digital platforms and early bird offers to drive early sales.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Sponsorship Opportunities -->
+  <div class="slide" id="slide7">
+    <div class="max-w-5xl mx-auto">
+      <span class="section-eyebrow">🤝 PARTNER WITH PRESTIGE</span>
+      <h2 class="section-title">Sponsorship Opportunities</h2>
+      <div class="gold-divider"></div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="glass-card p-6 text-center border-gold/40"><div class="stat-number">Main Sponsor</div><div class="text-2xl font-bold text-gold">$ 5,000+</div><p class="text-sm mt-2">Maximum brand exposure, naming rights, VIP experience.</p></div>
+        <div class="glass-card p-6 text-center border-gold/30"><div class="stat-number">Gold Sponsor</div><div class="text-2xl font-bold text-gold">$ 1,234</div><p class="text-sm mt-2">Strong brand visibility, focused promotional benefits.</p></div>
+        <div class="glass-card p-6 text-center border-gold/30"><div class="stat-number">Silver Sponsor</div><div class="text-2xl font-bold text-gold">$ 1,234</div><p class="text-sm mt-2">Supporting sponsor with premium recognition.</p></div>
+      </div>
+      <p class="text-center text-white/40 text-xs mt-6">*custom packages available upon request</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Event Execution Plan -->
+  <div class="slide" id="slide8">
+    <div class="max-w-5xl mx-auto">
+      <span class="section-eyebrow">⚡ SEAMLESS PRODUCTION</span>
+      <h2 class="section-title">Event Execution Plan</h2>
+      <div class="gold-divider"></div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card p-5"><i class="fas fa-stage text-gold text-2xl"></i><h3 class="font-bold mt-2">Stage, Sound & Lighting</h3><p class="text-white/70 text-sm">High quality stage design, sound systems, and lighting deliver immersive live music experience.</p></div>
+        <div class="glass-card p-5"><i class="fas fa-shield-alt text-gold text-2xl"></i><h3 class="font-bold mt-2">Crowd Control & Security</h3><p class="text-white/70 text-sm">Well planned crowd management, security measures ensuring safe environment for all attendees.</p></div>
+        <div class="glass-card p-5"><i class="fas fa-clock text-gold text-2xl"></i><h3 class="font-bold mt-2">Event Timeline & Rehearsals</h3><p class="text-white/70 text-sm">Detailed schedule and technical rehearsals to minimize errors and ensure seamless performances.</p></div>
+        <div class="glass-card p-5"><i class="fas fa-users text-gold text-2xl"></i><h3 class="font-bold mt-2">Experienced Production Team</h3><p class="text-white/70 text-sm">Skilled crew managing technical, stage, and operational aspects for smooth execution.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Our Latest Festival -->
+  <div class="slide" id="slide9">
+    <div class="flex flex-col justify-center min-h-[80vh] max-w-4xl mx-auto text-center">
+      <span class="section-eyebrow">✨ PAST GLORY</span>
+      <h2 class="section-title">Our Latest Festival</h2>
+      <div class="gold-divider mx-auto"></div>
+      <div class="glass-card p-8">
+        <p class="serif-text text-lg leading-relaxed">Our latest festival united music lovers through an immersive live experience with a diverse artist lineup, supported by high quality production, strong branding, and smooth event management, resulting in high audience engagement and valuable exposure for partners and sponsors.</p>
+        <div class="mt-6 flex justify-center gap-6">
+          <div><span class="stat-number text-4xl">350+</span><p class="text-sm uppercase tracking-wider">Total Visitors</p></div>
+          <div><span class="stat-number text-4xl">12+</span><p class="text-sm uppercase tracking-wider">Artists</p></div>
+          <div><span class="stat-number text-4xl">98%</span><p class="text-sm uppercase tracking-wider">Satisfaction</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Studio Shodwe / Contact -->
+  <div class="slide" id="slide10">
+    <div class="flex flex-col justify-center items-center min-h-[80vh] text-center">
+      <div class="gold-sheen absolute inset-0 opacity-20"></div>
+      <div class="relative z-10">
+        <span class="section-eyebrow">🎵 LET'S CREATE</span>
+        <h2 class="text-5xl md:text-7xl font-bold font-cinzel bg-gradient-to-r from-gold-light via-gold to-gold-light bg-clip-text text-transparent">Studio Shodwe</h2>
+        <p class="text-2xl mt-3 serif-text">Let’s Create an Unforgettable</p>
+        <p class="text-2xl mt-2 font-bold">Music Experience Together</p>
+        <div class="gold-divider mx-auto my-6 w-24"></div>
+        <div class="space-y-2 text-white/80">
+          <p><i class="fas fa-globe text-gold w-6"></i> www.reallygreatsite.com</p>
+          <p><i class="fas fa-phone-alt text-gold w-6"></i> +123-456-7890</p>
+          <p><i class="fas fa-envelope text-gold w-6"></i> hello@reallygreatsite.com</p>
+        </div>
+        <div class="flex gap-4 justify-center mt-8">
+          <i class="fab fa-instagram text-2xl text-white/50 hover:text-gold transition"></i>
+          <i class="fab fa-twitter text-2xl text-white/50 hover:text-gold transition"></i>
+          <i class="fab fa-facebook-f text-2xl text-white/50 hover:text-gold transition"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation buttons -->
+<div style="position: fixed; bottom: 1.5rem; right: 1.5rem; display: flex; gap: 0.8rem; z-index: 100;">
+  <button id="prevBtn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+  <button id="nextBtn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+</div>
+<div class="slide-indicator" id="slideIndicator"></div>
+
+<script>
+  // SLIDE MANAGEMENT
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let currentIdx = 0;
+  const dotContainer = document.getElementById('slideIndicator');
+  const progressBar = document.getElementById('progressBar');
+
+  function updateProgress() {
+    const percent = ((currentIdx + 1) / total) * 100;
+    progressBar.style.width = percent + '%';
+  }
+
+  function goToSlide(index) {
+    slides[currentIdx].classList.remove('active');
+    dotContainer.children[currentIdx].classList.remove('active');
+    currentIdx = (index + total) % total;
+    slides[currentIdx].classList.add('active');
+    dotContainer.children[currentIdx].classList.add('active');
+    slides[currentIdx].scrollTop = 0;
+    updateProgress();
+  }
+
+  // create dots
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotContainer.appendChild(dot);
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentIdx + 1));
+  document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentIdx - 1));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goToSlide(currentIdx + 1);
+    if (e.key === 'ArrowLeft') goToSlide(currentIdx - 1);
+  });
+
+  // Touch swipe for mobile
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 50) diff > 0 ? goToSlide(currentIdx + 1) : goToSlide(currentIdx - 1);
+  });
+
+  // Luxury sound ambiance: optional (just for vibe - not intrusive)
+  // Preload video to ensure smooth playback on first slide
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) heroVideo.play().catch(e => console.log("autoplay blocked"));
+  
+  // champagne popping visual micro-interaction on first slide? (just decorative)
+  // ensure all slides have correct initial state
+  updateProgress();
+  goToSlide(0);
+</script>
+</body>
+</html>
