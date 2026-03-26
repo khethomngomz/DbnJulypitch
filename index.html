@@ -1,528 +1,1577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Njalos July | The Horse Is Back — Country Style</title>
-  <!-- Google Fonts + Tailwind + Font Awesome -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* ----- LUXURY DESIGN SYSTEM (inspired by The Horse Is Back) ----- */
-    :root {
-      --navy: #050d1a;
-      --deep: #071428;
-      --blue: #0a2463;
-      --violet: #1e1040;
-      --purple: #2d1b69;
-      --gold: #c9a84c;
-      --gold-light: #e8cb7a;
-      --champagne: #f7e7a3;
-      --white: #f8f4ee;
-      --glass: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.12);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--navy);
-      color: var(--white);
-      overflow: hidden;
-    }
-    h1, h2, h3, h4, .luxury-font { font-family: 'Cinzel', serif; }
-    .serif-text { font-family: 'Cormorant Garamond', serif; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Njalos July 2026 — The Horse Is Back · Country Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    /* --- SLIDES CONTAINER --- */
-    .presentation {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1), visibility 0.9s;
-      overflow-y: auto;
-      padding: 2rem 2.5rem;
-      background: linear-gradient(135deg, rgba(5,13,26,0.92) 0%, rgba(30,16,64,0.88) 100%);
-      backdrop-filter: blur(2px);
-      scrollbar-width: thin;
-    }
-    .slide.active {
-      opacity: 1;
-      visibility: visible;
-      z-index: 10;
-    }
-    .slide::-webkit-scrollbar { width: 4px; }
-    .slide::-webkit-scrollbar-track { background: transparent; }
-    .slide::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+<style>
+/* ════════════════════════════════════════
+   DESIGN SYSTEM
+════════════════════════════════════════ */
+:root {
+  --navy:       #050d1a;
+  --deep:       #071428;
+  --blue:       #0a2463;
+  --violet:     #1e1040;
+  --purple:     #2d1b69;
+  --gold:       #c9a84c;
+  --gold-light: #e8cb7a;
+  --gold-pale:  #f5e4a8;
+  --champagne:  #f7e7a3;
+  --white:      #f8f4ee;
+  --rose:       #7a1f3d;
+}
 
-    /* --- VIDEO BACKGROUND (first slide only) --- */
-    .hero-video-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      filter: brightness(0.45) saturate(1.1);
-      transition: filter 0.5s ease;
-    }
-    .video-overlay {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, transparent 40%, rgba(5,13,26,0.65) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-    .gold-sheen {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(125deg, rgba(201,168,76,0.08) 0%, transparent 60%);
-      z-index: 1;
-      pointer-events: none;
-    }
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--navy);
+  color:var(--white);
+}
 
-    /* --- LUXURY TITLE ANIMATION (first slide) --- */
-    .luxury-title-container {
-      position: relative;
-      z-index: 15;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      text-align: center;
-    }
-    .horse-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(2.8rem, 9vw, 6rem);
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, #f3e5ab 70%, var(--gold-light) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 25px rgba(201,168,76,0.3);
-      animation: titleGlide 1.6s cubic-bezier(0.2, 0.9, 0.3, 1.1) forwards;
-      transform: translateY(60px) scale(0.96);
-      opacity: 0;
-    }
-    @keyframes titleGlide {
-      0% { opacity: 0; transform: translateY(80px) scale(0.92); filter: blur(8px); }
-      40% { opacity: 0.8; transform: translateY(-8px) scale(1.02); }
-      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-    }
-    .subtag-line {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      margin-top: 1.5rem;
-      animation: fadeInUp 1s ease 1s forwards;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+/* ════ PROGRESS BAR ════ */
+#progress{
+  position:fixed;top:0;left:0;height:2px;width:0%;z-index:9999;
+  background:linear-gradient(90deg,var(--purple),var(--gold),var(--gold-light),var(--gold));
+  transition:width .45s ease;
+}
 
-    /* --- CORNER BRACKETS (luxury detail) --- */
-    .corner-brackets {
-      position: absolute;
-      inset: 20px;
-      z-index: 20;
-      pointer-events: none;
-    }
-    .bracket {
-      position: absolute;
-      width: 45px;
-      height: 45px;
-      border-color: rgba(201,168,76,0.55);
-      border-style: solid;
-    }
-    .bracket-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
-    .bracket-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
-    .bracket-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
-    .bracket-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+/* ════ SLIDE ENGINE ════ */
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;}
+.slide{
+  position:absolute;inset:0;
+  opacity:0;visibility:hidden;
+  transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1);
+  transform:translateY(18px);
+  overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--gold) transparent;
+}
+.slide::-webkit-scrollbar{width:3px;}
+.slide::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px;}
+.slide.active{opacity:1;visibility:visible;transform:translateY(0);z-index:10;}
+.slide.exit{opacity:0;transform:translateY(-18px);}
 
-    /* --- SHARED SECTION STYLES (luxury glassmorphism) --- */
-    .section-eyebrow {
-      font-size: 0.65rem;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.8rem;
-    }
-    .section-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      background: linear-gradient(135deg, #fff, var(--champagne), var(--gold));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 1.2rem;
-    }
-    .gold-divider {
-      width: 70px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 1.2rem 0;
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 1.2rem;
-      transition: all 0.4s ease;
-    }
-    .glass-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(201,168,76,0.5);
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-    }
-    /* artist card specific */
-    .artist-card {
-      background: linear-gradient(145deg, rgba(10,36,99,0.3), rgba(45,27,105,0.25));
-      border-left: 3px solid var(--gold);
-    }
-    .stat-number {
-      font-family: 'Cinzel', serif;
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: var(--gold-light);
-    }
-    /* navigation */
-    .nav-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(201,168,76,0.4);
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 100;
-    }
-    .nav-btn:hover {
-      background: rgba(201,168,76,0.2);
-      transform: scale(1.08);
-      border-color: var(--gold);
-    }
-    .slide-indicator {
-      position: fixed;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(16px);
-      padding: 0.4rem 1rem;
-      border-radius: 40px;
-      display: flex;
-      gap: 0.6rem;
-      z-index: 100;
-      border: 1px solid rgba(201,168,76,0.3);
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-    .dot.active {
-      width: 26px;
-      background: var(--gold);
-      border-radius: 12px;
-    }
-    .progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
-      width: 0%;
-      z-index: 200;
-      transition: width 0.3s ease;
-    }
-    /* responsive */
-    @media (max-width: 768px) {
-      .slide { padding: 1.5rem; }
-      .section-title { font-size: 1.8rem; }
-      .artist-card { padding: 1rem; }
-    }
-  </style>
+/* ════ GRAIN TEXTURE ════ */
+.grain{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  opacity:.5;mix-blend-mode:overlay;
+}
+
+/* ════ CORNER BRACKETS ════ */
+.brackets{position:absolute;inset:16px;pointer-events:none;z-index:50;}
+.bk{position:absolute;width:36px;height:36px;border-color:rgba(201,168,76,.45);border-style:solid;}
+.bk-tl{top:0;left:0;border-width:1.5px 0 0 1.5px;}
+.bk-tr{top:0;right:0;border-width:1.5px 1.5px 0 0;}
+.bk-bl{bottom:0;left:0;border-width:0 0 1.5px 1.5px;}
+.bk-br{bottom:0;right:0;border-width:0 1.5px 1.5px 0;}
+
+/* ════ NAVIGATION ════ */
+#nav-wrap{
+  position:fixed;bottom:2rem;right:2rem;
+  display:flex;align-items:center;gap:.7rem;z-index:200;
+}
+.nav-btn{
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(5,13,26,.75);backdrop-filter:blur(16px);
+  border:1px solid rgba(201,168,76,.4);
+  color:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .3s ease;
+  font-size:.9rem;
+}
+.nav-btn:hover{background:rgba(201,168,76,.18);border-color:var(--gold);transform:scale(1.08);}
+
+/* ════ SLIDE COUNTER ════ */
+#slide-counter{
+  position:fixed;top:1.4rem;right:2rem;z-index:200;
+  font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;
+  color:rgba(201,168,76,.65);
+}
+
+/* ════ DOT INDICATOR ════ */
+#dots{
+  position:fixed;bottom:2.2rem;left:50%;transform:translateX(-50%);
+  display:flex;gap:.5rem;z-index:200;
+  background:rgba(5,13,26,.7);backdrop-filter:blur(16px);
+  padding:.5rem 1.1rem;border-radius:40px;
+  border:1px solid rgba(201,168,76,.18);
+}
+.dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.2);
+  cursor:pointer;transition:all .35s ease;
+}
+.dot.on{width:22px;background:var(--gold);border-radius:8px;}
+
+/* ════ LOGO BADGE ════ */
+#logo-badge{
+  position:fixed;top:1.4rem;left:2rem;z-index:200;
+  font-family:'Cinzel',serif;font-size:.85rem;font-weight:700;
+  letter-spacing:.18em;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:flex;align-items:center;gap:.5rem;
+}
+#logo-badge::before{content:'⬡';font-size:1rem;color:var(--gold);}
+
+/* ════ SHARED TYPOGRAPHY ════ */
+.eyebrow{
+  font-size:.58rem;letter-spacing:.55em;text-transform:uppercase;
+  color:var(--gold);display:flex;align-items:center;gap:.7rem;margin-bottom:.9rem;
+}
+.eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold);}
+.slide-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.8rem,3.8vw,3.2rem);font-weight:900;line-height:1;
+  background:linear-gradient(135deg,#fff,var(--champagne),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:1rem;
+}
+.gold-rule{
+  width:60px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:1.2rem 0;
+}
+.gold-rule.center{margin:1.2rem auto;}
+.body-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,1.6vw,1.25rem);font-style:italic;font-weight:300;
+  line-height:1.8;color:rgba(248,244,238,.82);
+}
+
+/* ════ GLASS CARDS ════ */
+.gc{
+  background:linear-gradient(145deg,rgba(10,36,99,.22),rgba(45,27,105,.18));
+  border:1px solid rgba(201,168,76,.15);
+  backdrop-filter:blur(12px);
+  transition:all .45s cubic-bezier(.25,.46,.45,.94);
+  position:relative;overflow:hidden;
+}
+.gc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.4),transparent);
+  transform:scaleX(0);transition:transform .5s ease;
+}
+.gc:hover{
+  transform:translateY(-6px);
+  border-color:rgba(201,168,76,.4);
+  box-shadow:0 24px 48px rgba(0,0,0,.4),0 0 30px rgba(201,168,76,.06);
+}
+.gc:hover::before{transform:scaleX(1);}
+.gc-corner{
+  position:absolute;top:0;right:0;
+  width:14px;height:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  clip-path:polygon(0 0,100% 0,100% 100%);
+}
+
+/* ════ IMAGE PLACEHOLDER ════ */
+.img-ph{
+  background:linear-gradient(135deg,rgba(10,36,99,.5),rgba(45,27,105,.4));
+  border:1px dashed rgba(201,168,76,.3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.6rem;overflow:hidden;position:relative;
+  transition:all .5s ease;
+}
+.img-ph::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,.04),transparent);
+  transition:opacity .4s;opacity:0;
+}
+.img-ph:hover::after{opacity:1;}
+.img-ph:hover{border-color:rgba(201,168,76,.5);}
+.img-ph svg{color:rgba(201,168,76,.3);transition:transform .4s;}
+.img-ph:hover svg{transform:scale(1.1);}
+.img-ph-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;color:rgba(201,168,76,.4);}
+.img-ph-sub{font-size:.5rem;letter-spacing:.15em;color:rgba(201,168,76,.25);}
+
+/* ════ STAT BLOCKS ════ */
+.stat-num{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.5rem,4.5vw,4rem);font-weight:900;line-height:1;
+  background:linear-gradient(135deg,var(--gold-pale),var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.stat-label{font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(248,244,238,.35);}
+
+/* ════ TICKER ════ */
+.ticker-wrap{overflow:hidden;position:relative;}
+.ticker-inner{
+  display:flex;white-space:nowrap;
+  animation:tickerRun 28s linear infinite;
+}
+.ticker-item{
+  font-family:'Cinzel',serif;font-size:.65rem;font-weight:700;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:var(--navy);padding:0 2rem;
+  display:inline-flex;align-items:center;gap:.8rem;
+}
+.ticker-dot{width:4px;height:4px;background:var(--navy);transform:rotate(45deg);}
+@keyframes tickerRun{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* ════════════════════════════════════════
+   SLIDE 1 — CINEMATIC HERO
+════════════════════════════════════════ */
+#s1{background:var(--navy);}
+.s1-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.45;filter:saturate(1.1);}
+.s1-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 50%,rgba(45,27,105,.55) 0%,transparent 65%),
+    radial-gradient(ellipse 60% 80% at 80% 30%,rgba(10,36,99,.4) 0%,transparent 60%),
+    linear-gradient(180deg,rgba(5,13,26,.3) 0%,rgba(5,13,26,.15) 40%,rgba(5,13,26,.8) 80%,rgba(5,13,26,1) 100%);
+}
+.s1-grid{
+  position:absolute;inset:0;z-index:2;
+  background-image:linear-gradient(rgba(201,168,76,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.025) 1px,transparent 1px);
+  background-size:70px 70px;
+  animation:gridShift 22s linear infinite;
+}
+@keyframes gridShift{0%{transform:translate(0,0);}100%{transform:translate(70px,70px);}}
+.s1-wm{
+  position:absolute;z-index:2;
+  font-family:'Cinzel',serif;font-size:clamp(16rem,35vw,32rem);font-weight:900;
+  color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.05);
+  letter-spacing:-.05em;line-height:1;
+  bottom:-4rem;left:50%;transform:translateX(-50%);
+  pointer-events:none;white-space:nowrap;
+  animation:wmPulse 10s ease infinite;
+}
+@keyframes wmPulse{0%,100%{-webkit-text-stroke:1px rgba(201,168,76,.05);}50%{-webkit-text-stroke:1px rgba(201,168,76,.11);}}
+.s1-slash{
+  position:absolute;z-index:3;
+  width:2px;height:140%;
+  background:linear-gradient(to bottom,transparent,rgba(201,168,76,.5),transparent);
+  left:35%;top:-20%;transform:rotate(12deg);
+  animation:slashGlow 4s ease infinite;
+}
+@keyframes slashGlow{0%,100%{opacity:.35;}50%{opacity:.75;}}
+.s1-slash2{left:65%;animation-delay:1.5s;}
+.s1-content{
+  position:relative;z-index:5;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;padding:0 2rem;text-align:center;
+}
+.s1-kicker{
+  font-size:.6rem;letter-spacing:.6em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.8rem;
+  display:flex;align-items:center;gap:1rem;
+  opacity:0;animation:fadeUp .8s ease .4s forwards;
+}
+.s1-kicker::before,.s1-kicker::after{content:'';display:block;width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
+.s1-kicker::after{transform:scaleX(-1);}
+.s1-title{
+  font-family:'Cinzel',serif;font-weight:900;line-height:.88;
+  opacity:0;animation:fadeUp 1s ease .6s forwards;
+}
+.s1-t1{
+  font-size:clamp(4rem,13vw,12rem);
+  background:linear-gradient(160deg,#fff 0%,var(--champagne) 30%,var(--gold) 65%,var(--gold-light) 85%,#fff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.s1-t2{
+  font-size:clamp(2rem,7.5vw,7rem);
+  color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.55);
+  display:block;letter-spacing:.12em;margin-top:-.05em;
+}
+.s1-t3{
+  font-size:clamp(4rem,13vw,12rem);
+  background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--champagne));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.s1-divider{
+  display:flex;align-items:center;gap:1.2rem;margin:2rem 0;
+  opacity:0;animation:fadeUp .8s ease 1s forwards;
+}
+.s1-divider-line{flex:1;max-width:100px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5));}
+.s1-divider-line:last-child{transform:scaleX(-1);}
+.s1-gem{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 16px var(--gold);animation:gemGlow 2s ease infinite;}
+@keyframes gemGlow{0%,100%{box-shadow:0 0 8px var(--gold);}50%{box-shadow:0 0 24px var(--gold),0 0 40px rgba(201,168,76,.3);}}
+.s1-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.1rem,2.2vw,1.7rem);font-style:italic;font-weight:300;
+  color:rgba(248,244,238,.75);max-width:700px;line-height:1.5;
+  opacity:0;animation:fadeUp .8s ease 1.2s forwards;
+}
+.s1-pill{
+  display:inline-flex;align-items:center;gap:.8rem;
+  border:1px solid rgba(201,168,76,.35);
+  padding:.65rem 2.2rem;
+  font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.3em;
+  color:var(--gold-light);margin-top:2rem;
+  position:relative;overflow:hidden;
+  opacity:0;animation:fadeUp .8s ease 1.4s forwards;
+}
+.s1-pill::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(201,168,76,.08),transparent);transform:translateX(-100%);animation:pillShine 3s ease infinite;}
+@keyframes pillShine{0%{transform:translateX(-100%);}45%,100%{transform:translateX(100%);}}
+.s1-icons{
+  display:flex;gap:2rem;margin-top:2.5rem;
+  opacity:0;animation:fadeUp .8s ease 1.6s forwards;
+}
+.s1-icon-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.s1-icon-item i{font-size:1.3rem;color:var(--gold);}
+.s1-icon-item span{font-size:.5rem;letter-spacing:.3em;color:rgba(248,244,238,.4);text-transform:uppercase;}
+.s1-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  opacity:0;animation:fadeUp .8s ease 2s forwards;
+}
+.s1-scroll-txt{font-size:.5rem;letter-spacing:.4em;color:rgba(201,168,76,.7);}
+.s1-scroll-bar{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease infinite;}
+@keyframes scrollPulse{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform:scaleY(1);transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+/* bubbles */
+.s1-bubble{
+  position:absolute;border-radius:50%;z-index:3;pointer-events:none;
+  background:radial-gradient(circle at 30% 30%,rgba(247,231,163,.4),rgba(201,168,76,.04));
+  border:1px solid rgba(201,168,76,.2);
+  animation:bubbleRise linear infinite;
+}
+@keyframes bubbleRise{0%{transform:translateY(0) scale(1);opacity:0;}10%{opacity:.9;}90%{opacity:.2;}100%{transform:translateY(-110vh) translateX(var(--bx)) scale(.4);opacity:0;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+/* ════════════════════════════════════════
+   SLIDE 2 — THE STORY
+════════════════════════════════════════ */
+#s2{
+  background:
+    linear-gradient(135deg,rgba(5,13,26,.97) 0%,rgba(29,16,64,.93) 100%),
+    url('https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=1600&q=80') center/cover no-repeat fixed;
+}
+.s2-inner{
+  max-width:1300px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:center;
+  min-height:100vh;padding:5rem 2.5rem;
+}
+.s2-pull-quote{
+  font-family:'Cinzel',serif;font-size:clamp(3rem,6vw,6rem);font-weight:900;
+  line-height:.9;letter-spacing:-.02em;
+  color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.2);
+  margin-bottom:2rem;position:relative;
+}
+.s2-pull-quote strong{
+  display:block;-webkit-text-stroke:0;
+  background:linear-gradient(135deg,#fff,var(--champagne),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.s2-text-block{padding:2rem;}
+.s2-img-stack{position:relative;height:480px;}
+.s2-img-main{
+  position:absolute;top:0;left:0;right:0;bottom:60px;
+}
+.s2-img-accent{
+  position:absolute;bottom:0;right:0;
+  width:55%;height:200px;
+  border:3px solid rgba(201,168,76,.2);
+  box-shadow:-20px -20px 0 rgba(201,168,76,.08);
+}
+.s2-img-badge{
+  position:absolute;top:1.5rem;left:-1.5rem;z-index:5;
+  background:linear-gradient(135deg,var(--gold-pale),var(--gold));
+  color:var(--navy);font-family:'Cinzel',serif;font-size:.55rem;
+  letter-spacing:.3em;padding:.5rem 1.2rem;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.s2-stats{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;}
+.s2-stat{border-right:1px solid rgba(201,168,76,.2);padding-right:2rem;}
+.s2-stat:last-child{border-right:none;}
+
+/* ════════════════════════════════════════
+   SLIDE 3 — THE OPULENCE GALLERY
+════════════════════════════════════════ */
+#s3{background:linear-gradient(180deg,var(--navy) 0%,var(--deep) 60%,var(--navy) 100%);}
+.s3-inner{max-width:1400px;margin:0 auto;padding:4rem 2rem;height:100vh;display:flex;flex-direction:column;}
+.s3-head{margin-bottom:1.5rem;}
+.s3-grid{
+  flex:1;
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:.8rem;
+  min-height:0;
+}
+.s3-cell{position:relative;overflow:hidden;}
+.s3-cell:nth-child(1){grid-column:1;grid-row:1/3;}
+.s3-cell:nth-child(2){grid-column:2;grid-row:1;}
+.s3-cell:nth-child(3){grid-column:3;grid-row:1;}
+.s3-cell:nth-child(4){grid-column:2;grid-row:2;}
+.s3-cell:nth-child(5){grid-column:3;grid-row:2;}
+.s3-cell .img-ph{width:100%;height:100%;}
+.s3-cell-num{
+  position:absolute;top:.8rem;left:.8rem;z-index:3;
+  font-family:'Cinzel',serif;font-size:2.5rem;font-weight:900;
+  color:rgba(201,168,76,.12);line-height:1;
+  pointer-events:none;
+}
+.s3-cell-label{
+  position:absolute;bottom:.8rem;left:.8rem;z-index:3;
+  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;
+  color:rgba(201,168,76,.5);
+}
+.s3-cell::before{
+  content:'';position:absolute;inset:0;z-index:2;
+  background:linear-gradient(to top,rgba(5,13,26,.7) 0%,transparent 50%);
+  opacity:0;transition:opacity .4s;
+}
+.s3-cell:hover::before{opacity:1;}
+
+/* video cell */
+.s3-video-wrap{width:100%;height:100%;position:relative;overflow:hidden;}
+.s3-video{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.9);transition:filter .5s;}
+.s3-cell:hover .s3-video{filter:brightness(.85) saturate(1.1);}
+.s3-play-btn{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;
+  transition:all .4s;
+}
+.s3-play-circle{
+  width:56px;height:56px;border-radius:50%;
+  border:1px solid rgba(201,168,76,.6);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);transition:all .4s;
+}
+.s3-cell:hover .s3-play-circle{background:rgba(201,168,76,.1);border-color:var(--gold);transform:scale(1.1);}
+
+/* ════════════════════════════════════════
+   SLIDE 4 — THE CONCEPT
+════════════════════════════════════════ */
+#s4{
+  background:
+    linear-gradient(135deg,rgba(5,13,26,.95) 0%,rgba(10,36,99,.88) 50%,rgba(29,16,64,.95) 100%),
+    url('https://images.unsplash.com/photo-1614267861476-0d129972a0f4?w=1600&q=80') center/cover no-repeat fixed;
+}
+.s4-inner{max-width:1200px;margin:0 auto;padding:5rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;min-height:100vh;}
+.s4-concept-cards{display:flex;flex-direction:column;gap:1rem;}
+.s4-card{
+  padding:1.6rem 2rem;
+  display:flex;align-items:flex-start;gap:1.4rem;
+  position:relative;
+  transition:all .45s ease;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+}
+.s4-card:hover{transform:translateX(8px);}
+.s4-icon-wrap{
+  width:48px;height:48px;flex-shrink:0;
+  border:1px solid rgba(201,168,76,.3);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:1.2rem;
+  transition:all .4s;
+}
+.s4-card:hover .s4-icon-wrap{border-color:var(--gold);background:rgba(201,168,76,.08);}
+.s4-card-title{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.15em;color:var(--gold-light);margin-bottom:.4rem;}
+.s4-card-text{font-size:.8rem;line-height:1.75;color:rgba(248,244,238,.55);}
+
+.s4-visual{position:relative;}
+.s4-img-main{width:100%;height:380px;margin-bottom:1rem;}
+.s4-img-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.s4-img-sm{height:160px;}
+.s4-feature-tag{
+  position:absolute;bottom:-1rem;right:-1rem;z-index:5;
+  background:linear-gradient(135deg,var(--violet),var(--purple));
+  border:1px solid rgba(201,168,76,.3);
+  padding:1rem 1.5rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;
+  color:var(--gold);
+}
+
+/* ════════════════════════════════════════
+   SLIDE 5 — TARGET AUDIENCE
+════════════════════════════════════════ */
+#s5{background:linear-gradient(180deg,var(--deep) 0%,var(--navy) 100%);}
+.s5-inner{max-width:1200px;margin:0 auto;padding:5rem 2.5rem;min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
+.s5-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:2rem;}
+.s5-card{
+  padding:2rem 1.5rem;text-align:center;
+  position:relative;overflow:hidden;
+  clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%);
+  transition:all .5s ease;cursor:default;
+}
+.s5-card::after{
+  content:'';position:absolute;top:0;right:0;
+  width:14px;height:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  clip-path:polygon(0 0,100% 0,100% 100%);
+  opacity:.6;transition:opacity .4s;
+}
+.s5-card:hover::after{opacity:1;}
+.s5-card:hover{transform:translateY(-8px);border-color:rgba(201,168,76,.4);box-shadow:0 25px 50px rgba(45,27,105,.4);}
+.s5-card-icon{
+  width:52px;height:52px;margin:0 auto 1.2rem;
+  border:1px solid rgba(201,168,76,.3);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:1.3rem;
+  transition:all .4s;
+}
+.s5-card:hover .s5-card-icon{border-color:var(--gold);background:rgba(201,168,76,.07);transform:scale(1.1);}
+.s5-card-title{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.2em;color:var(--gold-light);margin-bottom:.7rem;}
+.s5-card-text{font-size:.75rem;line-height:1.7;color:rgba(248,244,238,.5);}
+
+.s5-img-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-top:1.5rem;
+}
+.s5-strip-img{height:100px;position:relative;overflow:hidden;}
+
+/* ════════════════════════════════════════
+   SLIDE 6 — ARTIST LINEUP
+════════════════════════════════════════ */
+#s6{
+  background:
+    linear-gradient(135deg,rgba(5,13,26,.96) 0%,rgba(29,16,64,.9) 100%),
+    url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&q=80') center/cover no-repeat fixed;
+}
+.s6-inner{max-width:1300px;margin:0 auto;padding:4.5rem 2.5rem;min-height:100vh;display:flex;flex-direction:column;}
+.s6-grid{
+  flex:1;display:grid;
+  grid-template-columns:1.2fr 1fr 1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:1rem;margin-top:1.5rem;
+}
+.s6-featured{
+  grid-column:1;grid-row:1/3;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.s6-featured-img{width:100%;height:100%;position:absolute;inset:0;}
+.s6-featured-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(5,13,26,.97) 0%,transparent 55%);
+  z-index:1;
+}
+.s6-featured-content{position:relative;z-index:2;padding:2rem;}
+.s6-featured-tag{font-size:.5rem;letter-spacing:.4em;color:var(--gold);margin-bottom:.4rem;}
+.s6-featured-name{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:900;color:var(--white);line-height:1;}
+.s6-featured-role{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:rgba(248,244,238,.6);margin-top:.3rem;}
+.s6-artist{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  transition:all .4s ease;
+}
+.s6-artist:hover{z-index:2;transform:scale(1.02);}
+.s6-artist-img{width:100%;height:100%;position:absolute;inset:0;}
+.s6-artist-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(5,13,26,.9) 0%,transparent 60%);
+  z-index:1;
+}
+.s6-artist-info{position:relative;z-index:2;padding:1rem 1.2rem;}
+.s6-artist-name{font-family:'Cinzel',serif;font-size:.9rem;font-weight:700;color:var(--white);}
+.s6-artist-genre{font-size:.6rem;letter-spacing:.2em;color:var(--gold);margin-top:.2rem;}
+
+/* ════════════════════════════════════════
+   SLIDE 7 — MARKETING STRATEGY
+════════════════════════════════════════ */
+#s7{background:linear-gradient(180deg,var(--navy) 0%,var(--violet) 50%,var(--navy) 100%);}
+.s7-inner{max-width:1200px;margin:0 auto;padding:5rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;min-height:100vh;}
+.s7-timeline{display:flex;flex-direction:column;gap:0;}
+.s7-step{
+  display:flex;gap:1.5rem;position:relative;padding-bottom:2rem;
+}
+.s7-step:last-child{padding-bottom:0;}
+.s7-step-line-wrap{display:flex;flex-direction:column;align-items:center;gap:0;}
+.s7-step-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:var(--gold);flex-shrink:0;
+  box-shadow:0 0 12px rgba(201,168,76,.5);
+  margin-top:4px;
+}
+.s7-step-connector{flex:1;width:1px;background:linear-gradient(to bottom,var(--gold),rgba(201,168,76,.15));min-height:40px;}
+.s7-step:last-child .s7-step-connector{display:none;}
+.s7-step-num{
+  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.25em;
+  color:var(--gold);margin-bottom:.3rem;
+}
+.s7-step-title{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.15em;color:var(--gold-light);margin-bottom:.4rem;}
+.s7-step-text{font-size:.78rem;line-height:1.7;color:rgba(248,244,238,.5);}
+.s7-visual{position:relative;}
+.s7-img-main{width:100%;height:340px;margin-bottom:1rem;}
+.s7-img-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.s7-img-sm{height:150px;}
+.s7-badge{
+  position:absolute;top:-1rem;left:-1rem;z-index:5;
+  background:linear-gradient(135deg,var(--gold-pale),var(--gold));
+  color:var(--navy);
+  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;
+  padding:.5rem 1.2rem;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+
+/* ════════════════════════════════════════
+   SLIDE 8 — SPONSORSHIP
+════════════════════════════════════════ */
+#s8{
+  background:
+    linear-gradient(135deg,rgba(5,13,26,.96) 0%,rgba(45,27,105,.88) 60%,rgba(5,13,26,.96) 100%),
+    url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1600&q=80') center/cover no-repeat fixed;
+}
+.s8-inner{max-width:1200px;margin:0 auto;padding:5rem 2.5rem;min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
+.s8-tiers{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:1.2rem;margin-top:2.5rem;}
+.s8-tier{
+  padding:2.5rem 2rem;text-align:center;
+  position:relative;overflow:hidden;
+  transition:all .5s ease;
+}
+.s8-tier.featured{
+  background:linear-gradient(145deg,rgba(10,36,99,.45),rgba(45,27,105,.4)) !important;
+  border-color:rgba(201,168,76,.5) !important;
+}
+.s8-tier.featured::after{
+  content:'MOST POPULAR';position:absolute;top:1rem;right:-1.5rem;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  color:var(--navy);font-size:.45rem;letter-spacing:.25em;font-weight:700;
+  padding:.25rem 2.5rem;transform:rotate(45deg);
+}
+.s8-tier:hover{transform:translateY(-10px);box-shadow:0 30px 60px rgba(45,27,105,.5);}
+.s8-tier-crown{font-size:2rem;margin-bottom:.8rem;display:block;}
+.s8-tier-name{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.4em;color:var(--gold);margin-bottom:.5rem;}
+.s8-tier-price{
+  font-family:'Cinzel',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:900;line-height:1;
+  background:linear-gradient(135deg,var(--gold-pale),var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:1.5rem;
+}
+.s8-tier-price sub{font-size:.9rem;-webkit-text-fill-color:rgba(248,244,238,.4);}
+.s8-features{list-style:none;text-align:left;margin-bottom:1.5rem;}
+.s8-features li{
+  padding:.5rem 0;font-size:.75rem;color:rgba(248,244,238,.65);
+  border-bottom:1px solid rgba(201,168,76,.07);
+  display:flex;align-items:center;gap:.5rem;
+}
+.s8-features li::before{content:'◆';color:var(--gold);font-size:.4rem;flex-shrink:0;}
+.s8-btn{
+  display:block;width:100%;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;
+  padding:.8rem;text-decoration:none;
+  border:1px solid rgba(201,168,76,.4);color:var(--gold);
+  transition:all .4s;text-align:center;
+}
+.s8-tier.featured .s8-btn{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--navy);border-color:transparent;}
+.s8-btn:hover{box-shadow:0 5px 20px rgba(201,168,76,.3);}
+.s8-note{text-align:center;font-size:.6rem;letter-spacing:.2em;color:rgba(248,244,238,.2);margin-top:1.5rem;}
+
+/* ════════════════════════════════════════
+   SLIDE 9 — EXECUTION PLAN
+════════════════════════════════════════ */
+#s9{background:linear-gradient(180deg,var(--deep) 0%,var(--navy) 100%);}
+.s9-inner{max-width:1200px;margin:0 auto;padding:5rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;min-height:100vh;}
+.s9-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.s9-card{
+  padding:1.8rem 1.5rem;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  transition:all .45s ease;
+}
+.s9-card:hover{transform:translateY(-6px);}
+.s9-icon{
+  width:42px;height:42px;margin-bottom:1rem;
+  border:1px solid rgba(201,168,76,.25);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:1.1rem;
+  transition:all .4s;
+}
+.s9-card:hover .s9-icon{border-color:var(--gold);background:rgba(201,168,76,.06);}
+.s9-card-title{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.18em;color:var(--gold-light);margin-bottom:.5rem;}
+.s9-card-text{font-size:.75rem;line-height:1.75;color:rgba(248,244,238,.5);}
+.s9-visual{position:relative;}
+.s9-img-tall{width:100%;height:420px;}
+.s9-img-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;}
+.s9-img-sm{height:140px;}
+
+/* ════════════════════════════════════════
+   SLIDE 10 — PAST GLORY
+════════════════════════════════════════ */
+#s10{
+  background:
+    linear-gradient(135deg,rgba(5,13,26,.96) 0%,rgba(10,36,99,.88) 50%,rgba(29,16,64,.95) 100%),
+    url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1600&q=80') center/cover no-repeat fixed;
+}
+.s10-inner{max-width:1300px;margin:0 auto;padding:4.5rem 2.5rem;min-height:100vh;display:flex;flex-direction:column;}
+.s10-stats-row{display:flex;gap:0;margin-top:1.5rem;margin-bottom:2rem;}
+.s10-stat-block{
+  flex:1;text-align:center;
+  padding:2rem 1rem;
+  border:1px solid rgba(201,168,76,.12);
+  position:relative;overflow:hidden;
+  transition:all .4s;
+}
+.s10-stat-block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s;}
+.s10-stat-block:hover{border-color:rgba(201,168,76,.4);transform:translateY(-4px);}
+.s10-stat-block:hover::before{transform:scaleX(1);}
+.s10-stat-block:not(:last-child){border-right:none;}
+.s10-gallery{
+  flex:1;display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:.8rem;min-height:0;
+}
+.s10-cell{position:relative;overflow:hidden;}
+.s10-cell:nth-child(1){grid-row:1/3;}
+.s10-cell .img-ph{width:100%;height:100%;}
+.s10-video-cell{width:100%;height:100%;position:relative;overflow:hidden;}
+.s10-video{width:100%;height:100%;object-fit:cover;filter:brightness(.75);}
+.s10-video-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(5,13,26,.8) 0%,transparent 50%);
+  display:flex;align-items:center;justify-content:center;
+}
+.s10-play{
+  width:48px;height:48px;border-radius:50%;
+  border:1px solid rgba(201,168,76,.5);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);transition:all .4s;
+}
+.s10-cell:hover .s10-play{background:rgba(201,168,76,.1);border-color:var(--gold);transform:scale(1.1);}
+.s10-cell-label{position:absolute;bottom:.8rem;left:.8rem;z-index:3;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;color:var(--gold);}
+
+/* ════════════════════════════════════════
+   SLIDE 11 — CONTACT / CLOSER
+════════════════════════════════════════ */
+#s11{
+  background:var(--navy);
+  overflow:hidden;
+}
+.s11-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 50%,rgba(45,27,105,.5) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 70% at 80% 30%,rgba(10,36,99,.4) 0%,transparent 60%),
+    radial-gradient(ellipse 30% 30% at 50% 80%,rgba(122,31,61,.2) 0%,transparent 60%);
+}
+.s11-grid-bg{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(201,168,76,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.025) 1px,transparent 1px);
+  background-size:70px 70px;
+  animation:gridShift 22s linear infinite;
+}
+.s11-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;padding:4rem 2rem;text-align:center;
+}
+.s11-logo{
+  font-family:'Cinzel',serif;font-size:clamp(2.5rem,6vw,5.5rem);font-weight:900;
+  background:linear-gradient(135deg,var(--gold-pale),var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;margin-bottom:.5rem;
+}
+.s11-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.1rem,2vw,1.5rem);font-style:italic;
+  color:rgba(248,244,238,.6);margin-bottom:2.5rem;
+}
+.s11-divider{display:flex;align-items:center;gap:1.2rem;margin:1.5rem 0;justify-content:center;}
+.s11-divider-line{width:80px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.4));}
+.s11-divider-line:last-child{transform:scaleX(-1);}
+.s11-divider-gem{color:var(--gold);animation:gemGlow 2s ease infinite;}
+.s11-contact-grid{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;}
+.s11-contact-item{
+  display:flex;align-items:center;gap:.8rem;
+  font-size:.78rem;letter-spacing:.1em;color:rgba(248,244,238,.65);
+}
+.s11-contact-item i{color:var(--gold);font-size:1rem;width:20px;}
+.s11-cta{
+  display:inline-block;
+  font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.35em;
+  padding:1.1rem 4rem;text-decoration:none;
+  color:var(--navy);
+  background:linear-gradient(135deg,var(--gold-pale),var(--gold-light),var(--gold));
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+  position:relative;overflow:hidden;transition:all .4s ease;
+  margin-bottom:2.5rem;
+}
+.s11-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.25),transparent);transform:translateX(-100%) skewX(-20deg);transition:transform .6s;}
+.s11-cta:hover::before{transform:translateX(200%) skewX(-20deg);}
+.s11-cta:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(201,168,76,.45);}
+.s11-socials{display:flex;gap:1.5rem;}
+.s11-social{
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(201,168,76,.25);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(248,244,238,.4);font-size:.9rem;
+  transition:all .35s;
+}
+.s11-social:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.07);transform:translateY(-3px);}
+.s11-bottom{
+  margin-top:2rem;
+  font-size:.55rem;letter-spacing:.3em;
+  color:rgba(248,244,238,.2);
+}
+
+/* ════ TICKER (sits between slides) ════ */
+.slide-ticker{
+  padding:.75rem 0;
+  background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);
+  overflow:hidden;
+}
+
+/* ════ RESPONSIVE ════ */
+@media(max-width:900px){
+  .s2-inner,.s4-inner,.s7-inner,.s9-inner{grid-template-columns:1fr;}
+  .s2-img-stack{display:none;}
+  .s4-visual,.s7-visual,.s9-visual{display:none;}
+  .s5-grid,.s6-grid{grid-template-columns:1fr 1fr;}
+  .s6-featured{grid-column:1/3;grid-row:1;height:280px;}
+  .s8-tiers{grid-template-columns:1fr;}
+  .s10-gallery{grid-template-columns:1fr 1fr;}
+  .s10-cell:nth-child(1){grid-row:1;}
+  .s3-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .s3-cell:nth-child(1){grid-column:1/3;height:240px;}
+  .s3-cell:nth-child(n){grid-column:auto;grid-row:auto;}
+}
+@media(max-width:600px){
+  .s1-t1{font-size:3.5rem;}
+  .s1-t2{font-size:1.8rem;}
+  .s1-t3{font-size:3.5rem;}
+  .s5-grid,.s6-grid{grid-template-columns:1fr;}
+  .s6-featured{grid-column:1;}
+  .s9-cards{grid-template-columns:1fr;}
+  .s10-stats-row{flex-wrap:wrap;}
+  .s10-gallery{grid-template-columns:1fr;}
+  .s3-grid{grid-template-columns:1fr;}
+  .s3-cell:nth-child(1){grid-column:1;height:200px;}
+  #nav-wrap{bottom:4.5rem;}
+  .slide-title{font-size:1.6rem;}
+}
+</style>
 </head>
 <body>
-<div class="progress-bar" id="progressBar"></div>
 
-<div class="presentation">
-  <!-- SLIDE 1: THE HORSE IS BACK (full video, champagne atmosphere) -->
-  <div class="slide active" id="slide1">
-    <video class="hero-video-bg" autoplay muted loop playsinline id="heroVideo">
-      <source src="https://videos.pexels.com/video-files/3197673/3197673-uhd_2560_1440_25fps.mp4" type="video/mp4">
-      <!-- fallback: luxury ambiance video -->
-    </video>
-    <div class="video-overlay"></div>
-    <div class="gold-sheen"></div>
-    <div class="corner-brackets">
-      <div class="bracket bracket-tl"></div>
-      <div class="bracket bracket-tr"></div>
-      <div class="bracket bracket-bl"></div>
-      <div class="bracket bracket-br"></div>
+<div id="progress"></div>
+<div class="grain"></div>
+<div id="logo-badge">THE HORSE IS BACK</div>
+<div id="slide-counter">01 / 11</div>
+
+<!-- ════ DECK ════ -->
+<div class="deck" id="deck">
+
+<!-- ════════════════════════════════════════
+  SLIDE 1 — CINEMATIC OPENER
+════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <!-- Full background video -->
+  <video class="s1-video" autoplay muted loop playsinline>
+    <source src="https://cdn.coverr.co/videos/coverr-a-black-horse-running-in-a-field-5540/1080p.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/3197673/3197673-uhd_2560_1440_25fps.mp4" type="video/mp4">
+  </video>
+  <div class="s1-overlay"></div>
+  <div class="s1-grid"></div>
+  <div class="s1-wm">2026</div>
+  <div class="s1-slash"></div>
+  <div class="s1-slash s1-slash2"></div>
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+
+  <div class="s1-content">
+    <div class="s1-kicker">Njalos July · Durban · 2026</div>
+    <div class="s1-title">
+      <span class="s1-t1">THE HORSE</span>
+      <span class="s1-t2">IS BACK</span>
+      <span class="s1-t3">COUNTRY STYLE</span>
     </div>
-    <div class="luxury-title-container">
-      <h1 class="horse-title">THE HORSE<br>IS BACK</h1>
-      <div class="subtag-line">Country Style · Njalos July</div>
-      <div style="margin-top: 2rem; display: flex; gap: 0.8rem; justify-content: center; animation: fadeInUp 1.4s ease 1.3s forwards; opacity:0;">
-        <i class="fas fa-champagne-glasses" style="color: var(--gold-light); font-size: 1.4rem;"></i>
-        <i class="fas fa-music" style="color: var(--gold-light); font-size: 1.4rem;"></i>
-        <i class="fas fa-crown" style="color: var(--gold-light); font-size: 1.4rem;"></i>
-      </div>
-      <p style="margin-top: 2rem; font-size: 0.75rem; letter-spacing: 0.2em; color: rgba(248,244,238,0.5);">Hollywood Bets Durban July · Prestige Edition</p>
+    <div class="s1-divider">
+      <div class="s1-divider-line"></div>
+      <div class="s1-gem"></div>
+      <div class="s1-divider-line"></div>
+    </div>
+    <p class="s1-sub">A high fashion · live music · racing experience<br>at the prestigious Hollywood Bets Durban July</p>
+    <div class="s1-pill">
+      <i class="fas fa-calendar-alt" style="font-size:.75rem;"></i>
+      July 2026 &nbsp;·&nbsp; KwaZulu-Natal &nbsp;·&nbsp; Hollywood Bets
+    </div>
+    <div class="s1-icons">
+      <div class="s1-icon-item"><i class="fas fa-champagne-glasses"></i><span>Champagne</span></div>
+      <div class="s1-icon-item"><i class="fas fa-music"></i><span>Live Music</span></div>
+      <div class="s1-icon-item"><i class="fas fa-horse-head"></i><span>Racing</span></div>
+      <div class="s1-icon-item"><i class="fas fa-crown"></i><span>Prestige</span></div>
+      <div class="s1-icon-item"><i class="fas fa-car"></i><span>Luxury Cars</span></div>
     </div>
   </div>
+  <div class="s1-scroll"><span class="s1-scroll-txt">DISCOVER</span><div class="s1-scroll-bar"></div></div>
+</div>
 
-  <!-- SLIDE 2: The story of Njalos July -->
-  <div class="slide" id="slide2">
-    <div class="max-w-4xl mx-auto flex flex-col justify-center min-h-[80vh]">
-      <div class="inline-block mb-3"><span class="section-eyebrow"><i class="fas fa-crown mr-2"></i> THE LEGACY</span></div>
-      <h2 class="section-title">The Horse Is Back <br>Country Style!</h2>
-      <div class="gold-divider"></div>
-      <div class="glass-card p-6 md:p-8">
-        <p class="serif-text text-lg md:text-xl leading-relaxed text-white/85 italic">
-          Njalos July — a high fashion event, live music experience designed to bring artists and the classic audiences together. 
-          Featuring local and national performers, celebrities, and opulent taste in lifestyle. Njalos July aims to create an 
-          energetic, memorable, and well-produced horseracing experience at the prestigious KwaZulu Natal's Hollywood Bets Durban July event.
-        </p>
-        <div class="mt-6 flex gap-3 text-gold-300"><i class="fas fa-champagne-glasses text-gold-400"></i><i class="fas fa-horse-head text-gold-400"></i><i class="fas fa-record-vinyl text-gold-400"></i></div>
-      </div>
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
-        <div class="bg-white/5 p-3 rounded-xl border border-gold/20"><i class="fas fa-calendar-alt text-gold"></i><p class="text-sm mt-1">July 2026 · Durban</p></div>
-        <div class="bg-white/5 p-3 rounded-xl border border-gold/20"><i class="fas fa-ticket-alt text-gold"></i><p class="text-sm mt-1">VIP & Premium Access</p></div>
-        <div class="bg-white/5 p-3 rounded-xl border border-gold/20"><i class="fas fa-music text-gold"></i><p class="text-sm mt-1">Live Performances</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 3: Event Concept -->
-  <div class="slide" id="slide3">
-    <div class="max-w-5xl mx-auto">
-      <span class="section-eyebrow">✦ THE VISION ✦</span>
-      <h2 class="section-title">Event Concept</h2>
-      <div class="gold-divider"></div>
-      <div class="grid md:grid-cols-2 gap-6 mt-4">
-        <div class="glass-card p-6">
-          <i class="fas fa-head-side-headphones text-3xl text-gold mb-3"></i>
-          <h3 class="text-xl font-bold">Curated Music Theme</h3>
-          <p class="text-white/70 mt-2">Carefully curated lineup supported by high quality sound, lighting, and stage design.</p>
+<!-- ════════════════════════════════════════
+  SLIDE 2 — THE STORY
+════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s2-inner">
+    <div class="s2-text-block">
+      <div class="eyebrow">The Legacy</div>
+      <h2 class="slide-title">The Horse Is Back<br>Country Style</h2>
+      <div class="gold-rule"></div>
+      <p class="body-text" style="margin-bottom:1.5rem;">
+        Njalos July — a high fashion event, live music experience designed to bring artists and the classic audiences together.
+        Featuring local and national performers, celebrities, and opulent taste in lifestyle.
+      </p>
+      <p class="body-text">
+        Njalos July aims to create an <strong style="color:var(--gold-light);font-style:normal;">energetic, memorable, and well-produced</strong>
+        horseracing experience at the prestigious KwaZulu Natal's Hollywood Bets Durban July event.
+      </p>
+      <div class="s2-stats">
+        <div class="s2-stat">
+          <span class="stat-num" style="font-size:2.5rem;">R5M+</span>
+          <span class="stat-label">Prize Pool</span>
         </div>
-        <div class="glass-card p-6">
-          <i class="fas fa-chalkboard-user text-3xl text-gold mb-3"></i>
-          <h3 class="text-xl font-bold">Interactive Experiences</h3>
-          <p class="text-white/70 mt-2">Combines live performances with interactive audience experiences, strengthened by a strong visual identity and consistent branding.</p>
+        <div class="s2-stat">
+          <span class="stat-num" style="font-size:2.5rem;">12+</span>
+          <span class="stat-label">Live Races</span>
         </div>
-        <div class="md:col-span-2 glass-card p-6 flex flex-wrap gap-4 items-center justify-between">
-          <div><i class="fas fa-palette text-gold text-2xl mr-2"></i><span class="font-semibold">Visual Identity</span></div>
-          <div><i class="fas fa-lightbulb text-gold text-2xl mr-2"></i><span class="font-semibold">Immersive Lighting</span></div>
-          <div><i class="fas fa-waveform text-gold text-2xl mr-2"></i><span class="font-semibold">Premium Acoustics</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 4: Target Audience -->
-  <div class="slide" id="slide4">
-    <div class="max-w-4xl mx-auto">
-      <span class="section-eyebrow">🎯 AUDIENCE INSIGHTS</span>
-      <h2 class="section-title">Target Audience</h2>
-      <div class="gold-divider"></div>
-      <div class="grid md:grid-cols-2 gap-5 mt-5">
-        <div class="glass-card p-5 flex items-start gap-3"><i class="fas fa-music fa-2x text-gold"></i><div><p class="font-bold">Music enthusiasts</p><p class="text-white/70">Aged 18–35, passionate about live performances and music culture</p></div></div>
-        <div class="glass-card p-5 flex items-start gap-3"><i class="fas fa-briefcase fa-2x text-gold"></i><div><p class="font-bold">Young professionals</p><p class="text-white/70">Students, creatives, and trendsetters seeking premium experiences</p></div></div>
-        <div class="glass-card p-5 flex items-start gap-3"><i class="fas fa-hashtag fa-2x text-gold"></i><div><p class="font-bold">Active social media users</p><p class="text-white/70">Concert goers, digital natives, and brand advocates</p></div></div>
-        <div class="glass-card p-5 flex items-start gap-3"><i class="fas fa-champagne-glasses fa-2x text-gold"></i><div><p class="font-bold">Luxury lifestyle seekers</p><p class="text-white/70">Fans of high fashion, racing culture, and exclusive events</p></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 5: Artist Lineup -->
-  <div class="slide" id="slide5">
-    <div class="max-w-6xl mx-auto">
-      <span class="section-eyebrow">🌟 STAR POWER</span>
-      <h2 class="section-title">Artist Lineup</h2>
-      <div class="gold-divider"></div>
-      <div class="grid md:grid-cols-2 gap-5">
-        <div class="artist-card glass-card p-5"><i class="fas fa-microphone-alt text-gold text-2xl mb-2"></i><h3 class="text-xl font-bold">Drew Feig</h3><p class="text-white/60 text-sm">A professional singer with extensive experience performing at exclusive events and major stages.</p></div>
-        <div class="artist-card glass-card p-5"><i class="fas fa-guitar text-gold text-2xl mb-2"></i><h3 class="text-xl font-bold">Jamie Chastain</h3><p class="text-white/60 text-sm">Alternative rock band with powerful stage presence, combining modern rock elements with atmospheric soundscapes.</p></div>
-        <div class="artist-card glass-card p-5"><i class="fas fa-headphones text-gold text-2xl mb-2"></i><h3 class="text-xl font-bold">Estelle Darcy</h3><p class="text-white/60 text-sm">Dynamic electronic music DJ specializing in EDM and house music, creating high-energy sets.</p></div>
-        <div class="artist-card glass-card p-5"><i class="fas fa-piano text-gold text-2xl mb-2"></i><h3 class="text-xl font-bold">Olivia Wilson</h3><p class="text-white/60 text-sm">Solo singer-songwriter with soft pop and acoustic style, heartfelt performances and strong vocal delivery.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 6: Marketing & Promotion Strategy -->
-  <div class="slide" id="slide6">
-    <div class="max-w-5xl mx-auto">
-      <span class="section-eyebrow">📢 AMPLIFY THE VOICE</span>
-      <h2 class="section-title">Marketing & Promotion Strategy</h2>
-      <div class="gold-divider"></div>
-      <div class="grid md:grid-cols-2 gap-5">
-        <div class="glass-card p-5"><i class="fas fa-chart-line text-gold text-xl mr-2"></i><h3 class="font-bold text-lg">Visual Teasers & Countdowns</h3><p class="text-white/70 text-sm">Build excitement before the event with cinematic visuals.</p></div>
-        <div class="glass-card p-5"><i class="fas fa-hashtag text-gold text-xl mr-2"></i><h3 class="font-bold text-lg">Social Media Campaigns</h3><p class="text-white/70 text-sm">Engaging posts, videos, ads to reach wider audience.</p></div>
-        <div class="glass-card p-5"><i class="fas fa-user-friends text-gold text-xl mr-2"></i><h3 class="font-bold text-lg">Influencer & Media Partnerships</h3><p class="text-white/70 text-sm">Increase awareness and credibility through collaborations.</p></div>
-        <div class="glass-card p-5"><i class="fas fa-ticket-alt text-gold text-xl mr-2"></i><h3 class="font-bold text-lg">Online Ticketing & Early Bird</h3><p class="text-white/70 text-sm">Digital platforms and early bird offers to drive early sales.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 7: Sponsorship Opportunities -->
-  <div class="slide" id="slide7">
-    <div class="max-w-5xl mx-auto">
-      <span class="section-eyebrow">🤝 PARTNER WITH PRESTIGE</span>
-      <h2 class="section-title">Sponsorship Opportunities</h2>
-      <div class="gold-divider"></div>
-      <div class="grid md:grid-cols-3 gap-5">
-        <div class="glass-card p-6 text-center border-gold/40"><div class="stat-number">Main Sponsor</div><div class="text-2xl font-bold text-gold">$ 5,000+</div><p class="text-sm mt-2">Maximum brand exposure, naming rights, VIP experience.</p></div>
-        <div class="glass-card p-6 text-center border-gold/30"><div class="stat-number">Gold Sponsor</div><div class="text-2xl font-bold text-gold">$ 1,234</div><p class="text-sm mt-2">Strong brand visibility, focused promotional benefits.</p></div>
-        <div class="glass-card p-6 text-center border-gold/30"><div class="stat-number">Silver Sponsor</div><div class="text-2xl font-bold text-gold">$ 1,234</div><p class="text-sm mt-2">Supporting sponsor with premium recognition.</p></div>
-      </div>
-      <p class="text-center text-white/40 text-xs mt-6">*custom packages available upon request</p>
-    </div>
-  </div>
-
-  <!-- SLIDE 8: Event Execution Plan -->
-  <div class="slide" id="slide8">
-    <div class="max-w-5xl mx-auto">
-      <span class="section-eyebrow">⚡ SEAMLESS PRODUCTION</span>
-      <h2 class="section-title">Event Execution Plan</h2>
-      <div class="gold-divider"></div>
-      <div class="grid md:grid-cols-2 gap-5">
-        <div class="glass-card p-5"><i class="fas fa-stage text-gold text-2xl"></i><h3 class="font-bold mt-2">Stage, Sound & Lighting</h3><p class="text-white/70 text-sm">High quality stage design, sound systems, and lighting deliver immersive live music experience.</p></div>
-        <div class="glass-card p-5"><i class="fas fa-shield-alt text-gold text-2xl"></i><h3 class="font-bold mt-2">Crowd Control & Security</h3><p class="text-white/70 text-sm">Well planned crowd management, security measures ensuring safe environment for all attendees.</p></div>
-        <div class="glass-card p-5"><i class="fas fa-clock text-gold text-2xl"></i><h3 class="font-bold mt-2">Event Timeline & Rehearsals</h3><p class="text-white/70 text-sm">Detailed schedule and technical rehearsals to minimize errors and ensure seamless performances.</p></div>
-        <div class="glass-card p-5"><i class="fas fa-users text-gold text-2xl"></i><h3 class="font-bold mt-2">Experienced Production Team</h3><p class="text-white/70 text-sm">Skilled crew managing technical, stage, and operational aspects for smooth execution.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 9: Our Latest Festival -->
-  <div class="slide" id="slide9">
-    <div class="flex flex-col justify-center min-h-[80vh] max-w-4xl mx-auto text-center">
-      <span class="section-eyebrow">✨ PAST GLORY</span>
-      <h2 class="section-title">Our Latest Festival</h2>
-      <div class="gold-divider mx-auto"></div>
-      <div class="glass-card p-8">
-        <p class="serif-text text-lg leading-relaxed">Our latest festival united music lovers through an immersive live experience with a diverse artist lineup, supported by high quality production, strong branding, and smooth event management, resulting in high audience engagement and valuable exposure for partners and sponsors.</p>
-        <div class="mt-6 flex justify-center gap-6">
-          <div><span class="stat-number text-4xl">350+</span><p class="text-sm uppercase tracking-wider">Total Visitors</p></div>
-          <div><span class="stat-number text-4xl">12+</span><p class="text-sm uppercase tracking-wider">Artists</p></div>
-          <div><span class="stat-number text-4xl">98%</span><p class="text-sm uppercase tracking-wider">Satisfaction</p></div>
+        <div class="s2-stat">
+          <span class="stat-num" style="font-size:2.5rem;">50+</span>
+          <span class="stat-label">Artists</span>
         </div>
       </div>
     </div>
+    <div class="s2-img-stack">
+      <div class="s2-img-badge">◆ &nbsp; EST. 2024 &nbsp; ◆</div>
+      <!-- Main image placeholder -->
+      <div class="img-ph s2-img-main" style="height:calc(100% - 60px);">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span class="img-ph-label">YOUR HERO IMAGE</span>
+        <span class="img-ph-sub">RACE DAY · FULL ATMOSPHERE</span>
+      </div>
+      <!-- Accent image placeholder -->
+      <div class="img-ph s2-img-accent">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 2h8l1 7H7L8 2z"/><path d="M7 9s-1 2-1 4a6 6 0 0 0 12 0c0-2-1-4-1-4"/></svg>
+        <span class="img-ph-label">VIP MOMENT</span>
+        <span class="img-ph-sub">CHAMPAGNE · CELEBRATION</span>
+      </div>
+    </div>
   </div>
+</div>
 
-  <!-- SLIDE 10: Studio Shodwe / Contact -->
-  <div class="slide" id="slide10">
-    <div class="flex flex-col justify-center items-center min-h-[80vh] text-center">
-      <div class="gold-sheen absolute inset-0 opacity-20"></div>
-      <div class="relative z-10">
-        <span class="section-eyebrow">🎵 LET'S CREATE</span>
-        <h2 class="text-5xl md:text-7xl font-bold font-cinzel bg-gradient-to-r from-gold-light via-gold to-gold-light bg-clip-text text-transparent">Studio Shodwe</h2>
-        <p class="text-2xl mt-3 serif-text">Let’s Create an Unforgettable</p>
-        <p class="text-2xl mt-2 font-bold">Music Experience Together</p>
-        <div class="gold-divider mx-auto my-6 w-24"></div>
-        <div class="space-y-2 text-white/80">
-          <p><i class="fas fa-globe text-gold w-6"></i> www.reallygreatsite.com</p>
-          <p><i class="fas fa-phone-alt text-gold w-6"></i> +123-456-7890</p>
-          <p><i class="fas fa-envelope text-gold w-6"></i> hello@reallygreatsite.com</p>
+<!-- ════════════════════════════════════════
+  SLIDE 3 — A GLIMPSE INTO OPULENCE
+════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s3-inner">
+    <div class="s3-head">
+      <div class="eyebrow">The Experience</div>
+      <h2 class="slide-title">A Glimpse Into Opulence</h2>
+    </div>
+
+    <!-- Gold ticker strip -->
+    <div class="slide-ticker" style="margin-bottom:.8rem;border-radius:2px;">
+      <div class="ticker-inner" id="ticker1">
+        <span class="ticker-item"><span class="ticker-dot"></span>Champagne Flows</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Thunder on the Track</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Live Music on Stage</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Luxury Cars on Display</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Fine Dining &amp; Cigars</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>VIP Enclosures</span>
+        <!-- duplicate -->
+        <span class="ticker-item"><span class="ticker-dot"></span>Champagne Flows</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Thunder on the Track</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Live Music on Stage</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Luxury Cars on Display</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Fine Dining &amp; Cigars</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>VIP Enclosures</span>
+      </div>
+    </div>
+
+    <div class="s3-grid">
+      <!-- Cell 1: tall left — video -->
+      <div class="s3-cell">
+        <div class="s3-video-wrap">
+          <video class="s3-video" autoplay muted loop playsinline>
+            <source src="https://cdn.coverr.co/videos/coverr-a-black-horse-running-in-a-field-5540/1080p.mp4" type="video/mp4">
+          </video>
+          <div class="s3-play-btn"><div class="s3-play-circle"><i class="fas fa-play" style="font-size:.7rem;margin-left:2px;"></i></div></div>
         </div>
-        <div class="flex gap-4 justify-center mt-8">
-          <i class="fab fa-instagram text-2xl text-white/50 hover:text-gold transition"></i>
-          <i class="fab fa-twitter text-2xl text-white/50 hover:text-gold transition"></i>
-          <i class="fab fa-facebook-f text-2xl text-white/50 hover:text-gold transition"></i>
+        <div class="s3-cell-num">01</div>
+        <div class="s3-cell-label">◆ THE RACE</div>
+      </div>
+
+      <!-- Cell 2: top right 1 -->
+      <div class="s3-cell">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 2h8l1 7H7L8 2z"/><path d="M7 9s-1 2-1 4a6 6 0 0 0 12 0c0-2-1-4-1-4"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+          <span class="img-ph-label">REPLACE IMAGE</span>
+          <span class="img-ph-sub">CHAMPAGNE · VIP</span>
+        </div>
+        <div class="s3-cell-num">02</div>
+        <div class="s3-cell-label">◆ CHAMPAGNE</div>
+      </div>
+
+      <!-- Cell 3: top right 2 -->
+      <div class="s3-cell">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <span class="img-ph-label">REPLACE IMAGE</span>
+          <span class="img-ph-sub">PRESTIGE MOTORS</span>
+        </div>
+        <div class="s3-cell-num">03</div>
+        <div class="s3-cell-label">◆ MOTORS</div>
+      </div>
+
+      <!-- Cell 4: bottom right 1 -->
+      <div class="s3-cell">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          <span class="img-ph-label">REPLACE IMAGE</span>
+          <span class="img-ph-sub">LIVE MUSIC · STAGE</span>
+        </div>
+        <div class="s3-cell-num">04</div>
+        <div class="s3-cell-label">◆ MUSIC</div>
+      </div>
+
+      <!-- Cell 5: bottom right 2 -->
+      <div class="s3-cell">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6h3.5v5a2.5 2.5 0 0 0 5 0v-3H21"/></svg>
+          <span class="img-ph-label">REPLACE IMAGE</span>
+          <span class="img-ph-sub">FINE DINING · CIGARS</span>
+        </div>
+        <div class="s3-cell-num">05</div>
+        <div class="s3-cell-label">◆ DINING</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  SLIDE 4 — EVENT CONCEPT
+════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s4-inner">
+    <div>
+      <div class="eyebrow">The Vision</div>
+      <h2 class="slide-title">Event Concept</h2>
+      <div class="gold-rule"></div>
+      <p class="body-text" style="margin-bottom:2rem;font-size:.95rem;">Carefully crafted to deliver an experience that transcends the ordinary — where world-class production meets unbridled luxury.</p>
+      <div class="s4-concept-cards">
+        <div class="gc s4-card">
+          <div class="gc-corner"></div>
+          <div class="s4-icon-wrap"><i class="fas fa-headphones-alt"></i></div>
+          <div>
+            <div class="s4-card-title">Curated Music Theme</div>
+            <div class="s4-card-text">Premium sound, world-class lighting and stage design curated by industry specialists.</div>
+          </div>
+        </div>
+        <div class="gc s4-card">
+          <div class="gc-corner"></div>
+          <div class="s4-icon-wrap"><i class="fas fa-users"></i></div>
+          <div>
+            <div class="s4-card-title">Interactive Audience Experiences</div>
+            <div class="s4-card-text">Live performances fused with interactive experiences, strengthened by bold visual identity.</div>
+          </div>
+        </div>
+        <div class="gc s4-card">
+          <div class="gc-corner"></div>
+          <div class="s4-icon-wrap"><i class="fas fa-palette"></i></div>
+          <div>
+            <div class="s4-card-title">Immersive Visual Identity</div>
+            <div class="s4-card-text">Consistent branding and cinematic aesthetics across every touchpoint of the event.</div>
+          </div>
+        </div>
+        <div class="gc s4-card">
+          <div class="gc-corner"></div>
+          <div class="s4-icon-wrap"><i class="fas fa-crown"></i></div>
+          <div>
+            <div class="s4-card-title">Luxury Lifestyle Integration</div>
+            <div class="s4-card-text">Champagne, prestige motors, haute couture fashion, and fine dining woven throughout.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="s4-visual">
+      <div class="img-ph s4-img-main">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <span class="img-ph-label">REPLACE IMAGE</span>
+        <span class="img-ph-sub">STAGE · PRODUCTION · ATMOSPHERE</span>
+      </div>
+      <div class="s4-img-row">
+        <div class="img-ph s4-img-sm">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 18V5l12-2v13"/></svg>
+          <span class="img-ph-label">CROWD ENERGY</span>
+        </div>
+        <div class="img-ph s4-img-sm">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span class="img-ph-label">PERFORMANCE</span>
+        </div>
+      </div>
+      <div class="s4-feature-tag">◆ &nbsp; HIGH-END PRODUCTION &nbsp; ◆</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  SLIDE 5 — TARGET AUDIENCE
+════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s5-inner">
+    <div class="eyebrow">Who We Speak To</div>
+    <h2 class="slide-title">Our Audience</h2>
+    <div class="gold-rule"></div>
+    <div class="s5-grid">
+      <div class="gc s5-card">
+        <div class="s5-card-icon"><i class="fas fa-music"></i></div>
+        <div class="s5-card-title">Music Enthusiasts</div>
+        <div class="s5-card-text">Aged 18–35, passionate about live performances and authentic music culture experiences.</div>
+      </div>
+      <div class="gc s5-card">
+        <div class="s5-card-icon"><i class="fas fa-briefcase"></i></div>
+        <div class="s5-card-title">Young Professionals</div>
+        <div class="s5-card-text">Students, creatives, and trendsetters seeking premium, memorable occasions.</div>
+      </div>
+      <div class="gc s5-card">
+        <div class="s5-card-icon"><i class="fas fa-hashtag"></i></div>
+        <div class="s5-card-title">Digital Tastemakers</div>
+        <div class="s5-card-text">Active social media natives, concert-goers, and brand advocates who amplify the experience.</div>
+      </div>
+      <div class="gc s5-card">
+        <div class="s5-card-icon"><i class="fas fa-champagne-glasses"></i></div>
+        <div class="s5-card-title">Luxury Lifestyle Seekers</div>
+        <div class="s5-card-text">Fans of high fashion, racing culture, and exclusively curated events.</div>
+      </div>
+    </div>
+    <!-- Image strip -->
+    <div class="s5-img-strip">
+      <div class="img-ph s5-strip-img"><span class="img-ph-label" style="font-size:.45rem;">FASHION</span></div>
+      <div class="img-ph s5-strip-img"><span class="img-ph-label" style="font-size:.45rem;">LIFESTYLE</span></div>
+      <div class="img-ph s5-strip-img"><span class="img-ph-label" style="font-size:.45rem;">RACING</span></div>
+      <div class="img-ph s5-strip-img"><span class="img-ph-label" style="font-size:.45rem;">CELEBRATION</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  SLIDE 6 — ARTIST LINEUP
+════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s6-inner">
+    <div>
+      <div class="eyebrow">Star Power</div>
+      <h2 class="slide-title">Artist Lineup</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="s6-grid">
+      <!-- Featured artist -->
+      <div class="s6-featured gc">
+        <div class="img-ph s6-featured-img">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+          <span class="img-ph-label">HEADLINER PHOTO</span>
+        </div>
+        <div class="s6-featured-overlay"></div>
+        <div class="s6-featured-content">
+          <div class="s6-featured-tag">◆ &nbsp; HEADLINE ACT</div>
+          <div class="s6-featured-name">Drew Feig</div>
+          <div class="s6-featured-role">Professional vocalist · Exclusive events specialist</div>
+        </div>
+      </div>
+      <!-- 4 supporting artists -->
+      <div class="s6-artist gc">
+        <div class="img-ph s6-artist-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/></svg><span class="img-ph-label" style="font-size:.45rem;">ARTIST PHOTO</span></div>
+        <div class="s6-artist-overlay"></div>
+        <div class="s6-artist-info">
+          <div class="s6-artist-name">Jamie Chastain</div>
+          <div class="s6-artist-genre">◆ Alternative Rock</div>
+        </div>
+      </div>
+      <div class="s6-artist gc">
+        <div class="img-ph s6-artist-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg><span class="img-ph-label" style="font-size:.45rem;">ARTIST PHOTO</span></div>
+        <div class="s6-artist-overlay"></div>
+        <div class="s6-artist-info">
+          <div class="s6-artist-name">Estelle Darcy</div>
+          <div class="s6-artist-genre">◆ Electronic / EDM</div>
+        </div>
+      </div>
+      <div class="s6-artist gc">
+        <div class="img-ph s6-artist-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg><span class="img-ph-label" style="font-size:.45rem;">ARTIST PHOTO</span></div>
+        <div class="s6-artist-overlay"></div>
+        <div class="s6-artist-info">
+          <div class="s6-artist-name">Olivia Wilson</div>
+          <div class="s6-artist-genre">◆ Soft Pop · Acoustic</div>
+        </div>
+      </div>
+      <div class="s6-artist gc">
+        <div class="img-ph s6-artist-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2l3 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="img-ph-label" style="font-size:.45rem;">ARTIST PHOTO</span></div>
+        <div class="s6-artist-overlay"></div>
+        <div class="s6-artist-info">
+          <div class="s6-artist-name">Special Guest TBA</div>
+          <div class="s6-artist-genre">◆ Announcement Soon</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Navigation buttons -->
-<div style="position: fixed; bottom: 1.5rem; right: 1.5rem; display: flex; gap: 0.8rem; z-index: 100;">
-  <button id="prevBtn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
-  <button id="nextBtn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+<!-- ════════════════════════════════════════
+  SLIDE 7 — MARKETING STRATEGY
+════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s7-inner">
+    <div>
+      <div class="eyebrow">Amplify the Voice</div>
+      <h2 class="slide-title">Marketing &amp;<br>Promotion Strategy</h2>
+      <div class="gold-rule"></div>
+      <p class="body-text" style="font-size:.9rem;margin-bottom:2rem;">A multi-channel strategy designed to create unstoppable anticipation.</p>
+      <div class="s7-timeline">
+        <div class="s7-step">
+          <div class="s7-step-line-wrap"><div class="s7-step-dot"></div><div class="s7-step-connector"></div></div>
+          <div>
+            <div class="s7-step-num">01 &nbsp; ◆</div>
+            <div class="s7-step-title">Visual Teasers &amp; Countdowns</div>
+            <div class="s7-step-text">Cinematic video teasers, countdown campaigns, and reveal moments build unstoppable excitement.</div>
+          </div>
+        </div>
+        <div class="s7-step">
+          <div class="s7-step-line-wrap"><div class="s7-step-dot"></div><div class="s7-step-connector"></div></div>
+          <div>
+            <div class="s7-step-num">02 &nbsp; ◆</div>
+            <div class="s7-step-title">Social Media Campaigns</div>
+            <div class="s7-step-text">Engaging content, Reels, ads and stories across Instagram, TikTok and Facebook reaching mass audience.</div>
+          </div>
+        </div>
+        <div class="s7-step">
+          <div class="s7-step-line-wrap"><div class="s7-step-dot"></div><div class="s7-step-connector"></div></div>
+          <div>
+            <div class="s7-step-num">03 &nbsp; ◆</div>
+            <div class="s7-step-title">Influencer &amp; Media Partnerships</div>
+            <div class="s7-step-text">Collaborations with style, lifestyle, and entertainment influencers amplify reach and credibility.</div>
+          </div>
+        </div>
+        <div class="s7-step">
+          <div class="s7-step-line-wrap"><div class="s7-step-dot"></div></div>
+          <div>
+            <div class="s7-step-num">04 &nbsp; ◆</div>
+            <div class="s7-step-title">Online Ticketing &amp; Early Bird Offers</div>
+            <div class="s7-step-text">Digital ticketing platforms with early bird pricing drive urgency and early revenue.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="s7-visual">
+      <div class="s7-badge">◆ &nbsp; FULL CAMPAIGN &nbsp; ◆</div>
+      <div class="img-ph s7-img-main">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span class="img-ph-label">MARKETING VISUAL</span>
+        <span class="img-ph-sub">CAMPAIGN · SOCIAL · DIGITAL</span>
+      </div>
+      <div class="s7-img-row">
+        <div class="img-ph s7-img-sm"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg><span class="img-ph-label">INSTAGRAM</span></div>
+        <div class="img-ph s7-img-sm"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg><span class="img-ph-label">SOCIAL MEDIA</span></div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="slide-indicator" id="slideIndicator"></div>
+
+<!-- ════════════════════════════════════════
+  SLIDE 8 — SPONSORSHIP
+════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s8-inner">
+    <div class="eyebrow">Partner with Prestige</div>
+    <h2 class="slide-title">Sponsorship Opportunities</h2>
+    <div class="gold-rule"></div>
+    <p class="body-text" style="margin-bottom:2rem;font-size:.9rem;max-width:600px;">Be part of the most prestigious racing and lifestyle event of 2026. Your brand. Our audience. An unforgettable partnership.</p>
+    <div class="s8-tiers">
+      <div class="gc s8-tier">
+        <div class="gc-corner"></div>
+        <span class="s8-tier-crown">🥈</span>
+        <div class="s8-tier-name">Silver Sponsor</div>
+        <div class="s8-tier-price">R12,000<sub>/package</sub></div>
+        <ul class="s8-features">
+          <li>Brand logo on select materials</li>
+          <li>Social media mentions</li>
+          <li>4 VIP tickets</li>
+          <li>On-site brand visibility</li>
+        </ul>
+        <a href="#" class="s8-btn">ENQUIRE NOW</a>
+      </div>
+      <div class="gc s8-tier featured">
+        <div class="gc-corner"></div>
+        <span class="s8-tier-crown">👑</span>
+        <div class="s8-tier-name">Gold Sponsor</div>
+        <div class="s8-tier-price">R35,000<sub>/package</sub></div>
+        <ul class="s8-features">
+          <li>Premium brand placement</li>
+          <li>Dedicated social campaigns</li>
+          <li>10 Gold Enclosure tickets</li>
+          <li>Branded activation space</li>
+          <li>Stage mention &amp; recognition</li>
+        </ul>
+        <a href="#" class="s8-btn">RESERVE NOW</a>
+      </div>
+      <div class="gc s8-tier">
+        <div class="gc-corner"></div>
+        <span class="s8-tier-crown">💎</span>
+        <div class="s8-tier-name">Main Sponsor</div>
+        <div class="s8-tier-price">R75,000+<sub>/package</sub></div>
+        <ul class="s8-features">
+          <li>Naming rights &amp; maximum exposure</li>
+          <li>Full media partnership</li>
+          <li>20 Owners' Suite tickets</li>
+          <li>Exclusive branded zone</li>
+          <li>Celebrity &amp; VIP meet</li>
+          <li>Custom activation package</li>
+        </ul>
+        <a href="#" class="s8-btn">LET'S TALK</a>
+      </div>
+    </div>
+    <p class="s8-note">* Custom sponsorship packages available upon request · hello@reallygreatsite.com</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  SLIDE 9 — EXECUTION PLAN
+════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s9-inner">
+    <div>
+      <div class="eyebrow">Seamless Production</div>
+      <h2 class="slide-title">Event Execution Plan</h2>
+      <div class="gold-rule"></div>
+      <p class="body-text" style="font-size:.9rem;margin-bottom:1.5rem;">Every detail planned. Every moment produced to perfection.</p>
+      <div class="s9-cards">
+        <div class="gc s9-card">
+          <div class="gc-corner"></div>
+          <div class="s9-icon"><i class="fas fa-broadcast-tower"></i></div>
+          <div class="s9-card-title">Stage, Sound &amp; Lighting</div>
+          <div class="s9-card-text">High quality stage design, premium sound systems, and cinematic lighting deliver an immersive live experience.</div>
+        </div>
+        <div class="gc s9-card">
+          <div class="gc-corner"></div>
+          <div class="s9-icon"><i class="fas fa-shield-alt"></i></div>
+          <div class="s9-card-title">Crowd Control &amp; Security</div>
+          <div class="s9-card-text">Well-planned crowd management and discreet professional security ensure a safe, premium environment.</div>
+        </div>
+        <div class="gc s9-card">
+          <div class="gc-corner"></div>
+          <div class="s9-icon"><i class="fas fa-clock"></i></div>
+          <div class="s9-card-title">Event Timeline &amp; Rehearsals</div>
+          <div class="s9-card-text">Detailed scheduling, technical walk-throughs and full rehearsals minimize risk and ensure flawless delivery.</div>
+        </div>
+        <div class="gc s9-card">
+          <div class="gc-corner"></div>
+          <div class="s9-icon"><i class="fas fa-users-cog"></i></div>
+          <div class="s9-card-title">Experienced Production Team</div>
+          <div class="s9-card-text">Skilled, proven crew managing every technical and operational aspect from first call to wrap.</div>
+        </div>
+      </div>
+    </div>
+    <div class="s9-visual">
+      <div class="img-ph s9-img-tall">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        <span class="img-ph-label">PRODUCTION PHOTO</span>
+        <span class="img-ph-sub">STAGE · SETUP · CREW</span>
+      </div>
+      <div class="s9-img-row">
+        <div class="img-ph s9-img-sm"><span class="img-ph-label" style="font-size:.45rem;">SOUND CHECK</span></div>
+        <div class="img-ph s9-img-sm"><span class="img-ph-label" style="font-size:.45rem;">LIGHTING RIG</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  SLIDE 10 — PAST GLORY
+════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s10-inner">
+    <div>
+      <div class="eyebrow">Past Glory</div>
+      <h2 class="slide-title">Our Latest Festival</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="s10-stats-row">
+      <div class="s10-stat-block gc">
+        <div class="gc-corner"></div>
+        <span class="stat-num">350+</span>
+        <span class="stat-label">Total Visitors</span>
+      </div>
+      <div class="s10-stat-block gc">
+        <div class="gc-corner"></div>
+        <span class="stat-num">12+</span>
+        <span class="stat-label">Performing Artists</span>
+      </div>
+      <div class="s10-stat-block gc">
+        <div class="gc-corner"></div>
+        <span class="stat-num">98%</span>
+        <span class="stat-label">Guest Satisfaction</span>
+      </div>
+      <div class="s10-stat-block gc">
+        <div class="gc-corner"></div>
+        <span class="stat-num">8hrs</span>
+        <span class="stat-label">Live Programming</span>
+      </div>
+    </div>
+    <div class="s10-gallery">
+      <!-- Tall left — video highlight -->
+      <div class="s10-cell">
+        <div class="s10-video-cell">
+          <video class="s10-video" autoplay muted loop playsinline>
+            <source src="https://cdn.coverr.co/videos/coverr-pouring-champagne-into-glasses-7792/1080p.mp4" type="video/mp4">
+          </video>
+          <div class="s10-video-overlay">
+            <div class="s10-play"><i class="fas fa-play" style="font-size:.7rem;margin-left:2px;"></i></div>
+          </div>
+        </div>
+        <div class="s10-cell-label">◆ HIGHLIGHTS REEL</div>
+      </div>
+      <!-- Image cells -->
+      <div class="s10-cell">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="img-ph-label">REPLACE IMAGE</span>
+          <span class="img-ph-sub">CROWD · CELEBRATION</span>
+        </div>
+        <div class="s10-cell-label">◆ THE CROWD</div>
+      </div>
+      <div class="s10-cell">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          <span class="img-ph-label">REPLACE IMAGE</span>
+          <span class="img-ph-sub">LIVE PERFORMANCE</span>
+        </div>
+        <div class="s10-cell-label">◆ LIVE MUSIC</div>
+      </div>
+      <div class="s10-cell">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 2h8l1 7H7L8 2z"/><path d="M7 9s-1 2-1 4a6 6 0 0 0 12 0c0-2-1-4-1-4"/></svg>
+          <span class="img-ph-label">REPLACE IMAGE</span>
+          <span class="img-ph-sub">VIP · CHAMPAGNE</span>
+        </div>
+        <div class="s10-cell-label">◆ VIP MOMENTS</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+  SLIDE 11 — CLOSER / CONTACT
+════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="s11-bg"></div>
+  <div class="s11-grid-bg"></div>
+  <div class="brackets"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+
+  <div class="s11-content">
+    <div class="eyebrow" style="justify-content:center;">Let's Create Together</div>
+    <div class="s11-logo">Studio Shodwe</div>
+    <p class="s11-tagline">Njalos July · The Horse Is Back · Country Style</p>
+
+    <div class="s11-divider">
+      <div class="s11-divider-line"></div>
+      <div class="s11-divider-gem">◆</div>
+      <div class="s11-divider-line"></div>
+    </div>
+
+    <p class="body-text" style="max-width:520px;margin:0 auto 2rem;text-align:center;font-size:clamp(1rem,1.5vw,1.2rem);">
+      Let's create an unforgettable music and racing experience together.
+      Your brand. Our platform. July 2026. <strong style="color:var(--gold-light);font-style:normal;">Don't miss it.</strong>
+    </p>
+
+    <div class="s11-contact-grid">
+      <div class="s11-contact-item"><i class="fas fa-globe"></i>www.reallygreatsite.com</div>
+      <div class="s11-contact-item"><i class="fas fa-phone-alt"></i>+123-456-7890</div>
+      <div class="s11-contact-item"><i class="fas fa-envelope"></i>hello@reallygreatsite.com</div>
+    </div>
+
+    <a href="#" class="s11-cta">RESERVE YOUR PLACE · 2026</a>
+
+    <div class="s11-socials">
+      <a href="#" class="s11-social"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="s11-social"><i class="fab fa-tiktok"></i></a>
+      <a href="#" class="s11-social"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="s11-social"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="s11-social"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <div class="s11-bottom">
+      © 2026 Studio Shodwe · Njalos July · The Horse Is Back · Country Style &nbsp;·&nbsp; All rights reserved
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- ════ NAVIGATION ════ -->
+<div id="nav-wrap">
+  <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left" style="font-size:.8rem;"></i></button>
+  <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right" style="font-size:.8rem;"></i></button>
+</div>
+<div id="dots"></div>
 
 <script>
-  // SLIDE MANAGEMENT
-  const slides = document.querySelectorAll('.slide');
-  const total = slides.length;
-  let currentIdx = 0;
-  const dotContainer = document.getElementById('slideIndicator');
-  const progressBar = document.getElementById('progressBar');
+/* ════ SLIDE ENGINE ════ */
+const slides = document.querySelectorAll('.slide');
+const N = slides.length;
+let cur = 0;
+const dotsEl = document.getElementById('dots');
+const progressEl = document.getElementById('progress');
+const counterEl = document.getElementById('slide-counter');
 
-  function updateProgress() {
-    const percent = ((currentIdx + 1) / total) * 100;
-    progressBar.style.width = percent + '%';
+function pad(n){return String(n).padStart(2,'0');}
+
+function buildDots(){
+  for(let i=0;i<N;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' on':'');
+    d.addEventListener('click',()=>go(i));
+    dotsEl.appendChild(d);
   }
+}
 
-  function goToSlide(index) {
-    slides[currentIdx].classList.remove('active');
-    dotContainer.children[currentIdx].classList.remove('active');
-    currentIdx = (index + total) % total;
-    slides[currentIdx].classList.add('active');
-    dotContainer.children[currentIdx].classList.add('active');
-    slides[currentIdx].scrollTop = 0;
-    updateProgress();
+function go(idx){
+  slides[cur].classList.remove('active');
+  slides[cur].classList.add('exit');
+  setTimeout(()=>slides[idx-1>=0?idx:0]&&null,10);
+  dotsEl.children[cur].classList.remove('on');
+  cur=(idx+N)%N;
+  setTimeout(()=>{
+    slides.forEach(s=>s.classList.remove('exit'));
+    slides[cur].classList.add('active');
+    slides[cur].scrollTop=0;
+  },80);
+  dotsEl.children[cur].classList.add('on');
+  progressEl.style.width=((cur+1)/N*100)+'%';
+  counterEl.textContent=pad(cur+1)+' / '+pad(N);
+}
+
+buildDots();
+progressEl.style.width=(1/N*100)+'%';
+
+document.getElementById('nextBtn').addEventListener('click',()=>go(cur+1));
+document.getElementById('prevBtn').addEventListener('click',()=>go(cur-1));
+window.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(cur-1);
+});
+
+/* Touch swipe */
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=tx-e.changedTouches[0].screenX;
+  if(Math.abs(dx)>50) dx>0?go(cur+1):go(cur-1);
+},{passive:true});
+
+/* ════ BUBBLES on slide 1 ════ */
+(function(){
+  const s1=document.getElementById('s1');
+  for(let i=0;i<22;i++){
+    const b=document.createElement('div');
+    b.className='s1-bubble';
+    const sz=Math.random()*18+4;
+    b.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:${Math.random()*20-5}%;animation-delay:${Math.random()*14}s;animation-duration:${Math.random()*14+10}s;--bx:${(Math.random()-.5)*80}px;`;
+    s1.appendChild(b);
   }
+})();
 
-  // create dots
-  for (let i = 0; i < total; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'dot' + (i === 0 ? ' active' : '');
-    dot.addEventListener('click', () => goToSlide(i));
-    dotContainer.appendChild(dot);
-  }
-
-  document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentIdx + 1));
-  document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentIdx - 1));
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') goToSlide(currentIdx + 1);
-    if (e.key === 'ArrowLeft') goToSlide(currentIdx - 1);
-  });
-
-  // Touch swipe for mobile
-  let touchStartX = 0;
-  document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
-  document.addEventListener('touchend', (e) => {
-    const diff = touchStartX - e.changedTouches[0].screenX;
-    if (Math.abs(diff) > 50) diff > 0 ? goToSlide(currentIdx + 1) : goToSlide(currentIdx - 1);
-  });
-
-  // Luxury sound ambiance: optional (just for vibe - not intrusive)
-  // Preload video to ensure smooth playback on first slide
-  const heroVideo = document.getElementById('heroVideo');
-  if (heroVideo) heroVideo.play().catch(e => console.log("autoplay blocked"));
-  
-  // champagne popping visual micro-interaction on first slide? (just decorative)
-  // ensure all slides have correct initial state
-  updateProgress();
-  goToSlide(0);
+/* ════ Autoplay fix ════ */
+document.querySelectorAll('video').forEach(v=>{v.play().catch(()=>{});});
 </script>
 </body>
 </html>
