@@ -223,14 +223,22 @@ body{
    SLIDE 1 — CINEMATIC HERO
 ════════════════════════════════════════ */
 #s1{background:var(--navy);}
-.s1-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.45;filter:saturate(1.1);}
-.s1-overlay{
+.s1-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: .45;
+  filter: saturate(1.1);
+}/*.s1-overlay{
   position:absolute;inset:0;z-index:1;
   background:
     radial-gradient(ellipse 80% 60% at 20% 50%,rgba(45,27,105,.55) 0%,transparent 65%),
     radial-gradient(ellipse 60% 80% at 80% 30%,rgba(10,36,99,.4) 0%,transparent 60%),
     linear-gradient(180deg,rgba(5,13,26,.3) 0%,rgba(5,13,26,.15) 40%,rgba(5,13,26,.8) 80%,rgba(5,13,26,1) 100%);
-}
+}*/
 .s1-grid{
   position:absolute;inset:0;z-index:2;
   background-image:linear-gradient(rgba(201,168,76,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.025) 1px,transparent 1px);
@@ -841,6 +849,8 @@ body{
   #nav-wrap{bottom:4.5rem;}
   .slide-title{font-size:1.6rem;}
 }
+
+
 </style>
 </head>
 <body>
@@ -859,7 +869,7 @@ body{
 <div class="slide active" id="s1">
   <!-- Full background video -->
   <video class="s1-video" autoplay muted loop playsinline>
-    <source src="assets/njalovid.mp4" type="video/mp4">
+    <source src="assets/hm1.mov" type="video/mp4">
     <source src="assets/njalovid2.mp4" type="video/mp4">
   </video>
   <div class="s1-overlay"></div>
@@ -1422,7 +1432,7 @@ body{
       <div class="s10-cell">
         <div class="s10-video-cell">
           <video class="s10-video" autoplay muted loop playsinline>
-            <source src="https://cdn.coverr.co/videos/coverr-pouring-champagne-into-glasses-7792/1080p.mp4" type="video/mp4">
+            <source src="assets/njvid.mp4" type="video/mp4">
           </video>
           <div class="s10-video-overlay">
             <div class="s10-play"><i class="fas fa-play" style="font-size:.7rem;margin-left:2px;"></i></div>
